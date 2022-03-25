@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
+import HomeNewest from "./Home-newest.vue";
 const post = ref({
   id: -1,
   title: "",
@@ -17,5 +18,7 @@ onMounted(async () => {
   return { post };
 });
 </script>
-<template>aaa</template>
+<template>
+  <HomeNewest></HomeNewest>
+</template>
 <style lang="scss" scoped></style>
