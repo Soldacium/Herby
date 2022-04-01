@@ -4,23 +4,25 @@ import { ResultImage } from "../models/result-image.model";
 const props = defineProps<{ result: ResultImage }>();
 </script>
 <template>
-  <router-link :to="props.result.link">
-    <div class="search-result">
+  <div class="search-result">
+    <router-link :to="props.result.link">
       <img :src="props.result.image" alt="" />
       <h1 class="name">{{ props.result.name }}</h1>
       <div class="formats">
         <div class="format" v-for="format in props.result.formats">
           {{ format }}
-        </div>
+          <!--
+          <img :src="'/src/shared/assets/icons/' + format + '.svg'" alt="" />
+        --></div>
       </div>
-    </div>
-  </router-link>
+    </router-link>
+  </div>
 </template>
 <style lang="scss" scoped>
 .search-result {
   width: 100%;
   height: 100%;
-  padding: 2em;
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -29,39 +31,58 @@ const props = defineProps<{ result: ResultImage }>();
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  transition: 0.2s ease;
 
-  &:hover {
-    box-shadow: 0 0 6px 2px rgb(231, 231, 231);
-  }
+  position: relative;
 
   img {
-    height: 250px;
+    width: 100%;
     position: relative;
+  }
+
+  a {
+    padding: 2em;
+    border-radius: 10px;
+    transition: 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 3px 8px 0px rgb(209, 209, 209);
+    }
   }
 
   .name {
     margin-top: auto;
     font-size: var(--text-size-bigger);
     text-decoration: none;
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 1.5em;
   }
 
   .formats {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
 
     .format {
-      margin-top: 5px;
-      border-radius: 5px 0 0 5px;
-      padding: 3px;
+      flex: 1 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      border: 1px solid rgb(231, 231, 231);
+      border-bottom: 0;
+      padding: 4px 0;
+
+      img {
+        height: 20px;
+      }
+
       @for $i from 1 through 4 {
         &:nth-child(#{$i}) {
-          background-color: var(--color-accent-#{$i});
+          // color: var(--color-accent-#{$i});
         }
       }
     }

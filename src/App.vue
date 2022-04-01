@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Home from "./views/home/Home.vue";
+import Footer from "./shared/components/Footer.vue";
+import NavMain from "./shared/components/NavMain.vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 /*
@@ -21,7 +23,13 @@ import Home from "./views/home/Home.vue";
 
 <template>
   <div class="color-mode-wrap">
-    <router-view></router-view>
+    <NavMain></NavMain>
+
+    <router-view v-slot="{ Component, route }">
+      <KeepAlive> <component :is="Component"></component></KeepAlive>
+    </router-view>
+
+    <Footer></Footer>
   </div>
 </template>
 

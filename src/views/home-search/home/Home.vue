@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import HomeNewest from "./Home-newest.vue";
+import HomeExplore from "./Home-explore.vue";
+import HomeAbout from "./Home-about.vue";
+import HomeSuggestion from "./Home-suggestion.vue";
+import HomeFeatures from "./Home-features.vue";
 const post = ref({
   id: -1,
   title: "",
@@ -19,6 +23,10 @@ onMounted(async () => {
 });
 </script>
 <template>
+  <HomeFeatures></HomeFeatures>
   <HomeNewest></HomeNewest>
+  <HomeAbout></HomeAbout>
+  <HomeExplore></HomeExplore>
+  <HomeSuggestion></HomeSuggestion>
 </template>
 <style lang="scss" scoped></style>

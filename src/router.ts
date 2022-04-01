@@ -32,15 +32,13 @@ const router = createRouter({
   history: createWebHistory(),
 });
 
-/*
 router.beforeEach((to, from, next) => {
-  store.commit("changeLoading");
+  //store.commit("changeLoading");
   next();
 });
 
 router.afterEach(() => {
-  store.commit("changeLoading");
+  //store.commit("changeLoading");
 });
-*/
 
 export default router;

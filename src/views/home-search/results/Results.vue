@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
+import exampleResults from "../home/example-result";
+import SearchResult from "../../../shared/components/SearchResult.vue";
+
 const post = ref({
   id: -1,
   title: "",
@@ -16,6 +19,68 @@ onMounted(async () => {
 
   return { post };
 });
+
+const results = exampleResults;
+const pages = [1, 2, 3];
 </script>
-<template>aaav</template>
-<style lang="scss" scoped></style>
+<template>
+  <div class="wrap">
+    <div class="results">
+      <div class="result" v-for="result in results">
+        <SearchResult :result="result"></SearchResult>
+      </div>
+    </div>
+    <div class="pager">
+      <div class="left">&lt;</div>
+      <div class="pages">
+        <div class="page" v-for="page in pages">{{ page }}</div>
+      </div>
+      <div class="right">&gt;</div>
+    </div>
+  </div>
+</template>
+<style lang="scss" scoped>
+.wrap {
+  padding: 0 10%;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+
+  .result {
+    flex: 1 1 10em;
+    max-width: 10em;
+    margin: 1em;
+  }
+}
+
+.pager {
+  display: flex;
+  margin-top: 4em;
+  padding-top: 1em;
+
+  .left {
+    margin-right: auto;
+  }
+
+  .pages {
+    display: flex;
+    .page {
+      border: 1px solid rgb(214, 214, 214);
+      border-radius: 10px;
+      padding: 0.5em;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+      font-size: 1.3em;
+    }
+  }
+  .right {
+    margin-left: auto;
+  }
+}
+</style>
