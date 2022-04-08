@@ -1,19 +1,19 @@
 import { ResultImage } from "../../../shared/models/result-image.model";
 
 const result: ResultImage = {
-  name: "example",
+  name: "Barcelona",
   link: "/details/example",
   formats: ["svg", "jpg", "png"],
   id: "1",
-  image: "/src/shared/assets/icons/svg.svg",
+  image: "/src/shared/assets/backgrounds/fc-barcelona.svg",
 };
 
 const result2: ResultImage = {
-  name: "example",
+  name: "Madryt",
   link: "/details/example2",
   formats: ["svg", "jpg", "png"],
   id: "1",
-  image: "/src/shared/assets/icons/jpg.svg",
+  image: "/src/shared/assets/backgrounds/madrid-cf.svg",
 };
 
 const results = Array(20).fill(result2);

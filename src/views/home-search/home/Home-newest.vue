@@ -25,14 +25,13 @@ const results = exampleResults.slice(0, 4);
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: 0 10%;
 
   .newest {
     display: flex;
     flex-wrap: wrap;
 
     .newest-result {
-      flex: 1 1 20em;
+      flex: 1 1 15em;
       margin: 1em;
     }
   }

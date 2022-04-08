@@ -10,7 +10,7 @@ const props = defineProps<{ result: ResultImage }>();
       <h1 class="name">{{ props.result.name }}</h1>
       <div class="formats">
         <div class="format" v-for="format in props.result.formats">
-          {{ format }}
+          .{{ format }}
           <!--
           <img :src="'/src/shared/assets/icons/' + format + '.svg'" alt="" />
         --></div>
@@ -24,13 +24,13 @@ const props = defineProps<{ result: ResultImage }>();
   height: 100%;
 
   display: flex;
-  flex-direction: column;
   position: relative;
   border: 1px solid rgb(224, 224, 224);
   border-radius: 10px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-color: white;
 
   position: relative;
 
@@ -43,18 +43,27 @@ const props = defineProps<{ result: ResultImage }>();
     padding: 2em;
     border-radius: 10px;
     transition: 0.2s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    //top: 0;
 
     &:hover {
-      box-shadow: 0 3px 8px 0px rgb(209, 209, 209);
+      box-shadow: 0 5px 8px 0px rgba(32, 32, 32, 0.185);
     }
   }
 
   .name {
     margin-top: auto;
-    font-size: var(--text-size-bigger);
+    // font-size: var(--text-size-bigger);
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1em;
     margin-top: 1.5em;
+    font-weight: 500;
+    // color: rgba(128, 128, 128, 0.308);
   }
 
   .formats {
@@ -71,10 +80,17 @@ const props = defineProps<{ result: ResultImage }>();
       display: flex;
       justify-content: center;
       align-items: center;
-      font-weight: 600;
+      font-weight: 500;
       border: 1px solid rgb(231, 231, 231);
       border-bottom: 0;
       padding: 4px 0;
+      border-left: 0;
+      //background-color: var(--gray-light);
+      font-size: 0.9em;
+
+      &:last-of-type {
+        border-right: 0;
+      }
 
       img {
         height: 20px;

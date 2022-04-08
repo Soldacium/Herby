@@ -22,7 +22,7 @@ import NavMain from "./shared/components/NavMain.vue";
 </script>
 
 <template>
-  <div class="color-mode-wrap">
+  <div class="color-mode-wrap" id="color-mode-wrap">
     <NavMain></NavMain>
 
     <router-view v-slot="{ Component, route }">

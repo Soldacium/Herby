@@ -26,8 +26,8 @@
   justify-content: center;
   align-items: center;
   min-width: 70vw;
-  margin-top: 15em;
-  margin-bottom: 10em;
+  margin-top: 10em;
+  margin-bottom: 8em;
 }
 
 .text {

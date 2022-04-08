@@ -2,8 +2,16 @@
 <template>
   <div class="wrapper">
     <div class="images">
-      <img src="/src/shared/assets/icons/png.svg" alt="" class="front" />
-      <img src="/src/shared/assets/icons/svg.svg" alt="" class="back" />
+      <img
+        src="/src/shared/assets/backgrounds/fc-barcelona.svg"
+        alt=""
+        class="front"
+      />
+      <img
+        src="/src/shared/assets/backgrounds/madrid-cf.svg"
+        alt=""
+        class="back"
+      />
     </div>
     <div class="text">
       <div class="title">A database for all</div>
@@ -22,7 +30,6 @@
 </template>
 <style lang="scss" scoped>
 .wrapper {
-  padding: 0 10%;
   margin-top: 15em;
   display: flex;
   min-height: 60vh;
@@ -30,8 +37,8 @@
 
   .images {
     position: relative;
-    width: 500px;
-    margin-right: 3em;
+    width: 400px;
+    margin-right: 1em;
     margin-bottom: 3em;
     flex-shrink: 0;
     flex: 1 1 20em;
@@ -48,16 +55,17 @@
     }
 
     .back {
-      left: -30px;
-      top: -40px;
+      left: -80px;
+      top: -80px;
       width: 60%;
+      opacity: 0.5;
     }
   }
 
   .text {
     flex: 1 1 30em;
     .title {
-      font-size: 6em;
+      font-size: 4em;
       font-weight: 600;
       margin-bottom: 0.4em;
       padding-bottom: 0.2em;
@@ -69,11 +77,14 @@
     }
 
     button {
-      border: 3px solid black;
-      background: transparent;
-      padding: 0.8em 1em;
-      font-size: 2em;
+      border: 1px solid var(--gray-medium);
+      background: var(--color-secondary);
+      color: white;
+      padding: 0.8em 2em;
+      font-size: 1.6em;
       margin-top: 2em;
+      border-radius: 10px;
+      cursor: pointer;
     }
   }
 }

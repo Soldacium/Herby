@@ -49,8 +49,8 @@ const pages = [1, 2, 3];
   flex-wrap: wrap;
 
   .result {
-    flex: 1 1 10em;
-    max-width: 10em;
+    flex: 1 1 12em;
+    max-width: 14em;
     margin: 1em;
   }
 }

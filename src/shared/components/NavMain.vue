@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { changeColorScheme } from "../services/color-mode.service";
 const menuState = ref<"open" | "closed">("closed");
 const changeMenuState = () => {
   menuState.value === "open"
@@ -7,8 +9,39 @@ const changeMenuState = () => {
     : (menuState.value = "open");
   console.log(menuState.value);
 };
+const route = useRoute();
+
+let mode = ref("home-search");
+
+watch(route, (newRoute, oldRoute) => {
+  checkPath(newRoute.path);
+});
+
+onMounted(() => {
+  checkPath(route.path);
+});
+
+const checkPath = (path: string) => {
+  if (path.includes("home") || path.includes("search")) {
+    mode.value = "home-search";
+  } else {
+    mode.value = "other";
+  }
+};
 </script>
 <template>
+  <nav :class="mode == 'home-search' ? 'normal' : 'reversed'">
+    <img src="/src/shared/assets/icons/sport-2.svg" alt="" class="logo" />
+    <div class="links">
+      <a href="">Search</a>
+      <a href="">Clubs</a>
+      <a href="">Login</a>
+    </div>
+    <!--
+
+    <button @click="changeColorScheme('dark')">Dark Mode</button>      
+    -->
+  </nav>
   <div
     class="hamburger"
     @click="changeMenuState()"
@@ -23,37 +56,51 @@ const changeMenuState = () => {
   <div class="overlay" :class="menuState === 'open' ? 'active' : 'naah'">
     <div class="nav-overlay">
       <ul>
-        <li><a href="#start">Start</a></li>
-        <li><a href="#oferta">Oferta</a></li>
-        <li><a href="#onas">O nas</a></li>
-        <li><a href="#cennik">Cennik</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="">Home</a></li>
+        <li><a href="">Search</a></li>
+        <li><a href="">Clubs</a></li>
+        <li><a href="">Add</a></li>
+        <li><a href="">About</a></li>
+        <button @click="changeColorScheme('dark')">Dark Mode</button>
       </ul>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-.nav {
+nav {
   display: flex;
-  padding: 2em calc(15% - 7em);
+  padding: 0.5em calc(15% - 7em);
   width: 100%;
-  height: 6.5em;
+  height: 3em;
   position: absolute;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  z-index: 10000;
+
+  &.reversed {
+    position: fixed;
+    background-color: var(--color-secondary);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.397);
+    // background: linear-gradient(var(--color-primary));
+    .links {
+    }
+  }
   .logo {
-    height: 4em;
-    align-self: flex-start;
+    height: 2em;
+    // align-self: flex-start;
+    filter: invert(100%);
   }
 
   .links {
     margin-left: auto;
     flex-wrap: nowrap;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
 
     a {
       text-decoration: none;
-      color: var(--color-white);
+      color: var(--color-text-reverse);
       margin: calc(1.3vw - 0.2em);
       font-size: var(--text-size-medium);
     }
@@ -75,14 +122,16 @@ const changeMenuState = () => {
   margin: 0 1rem;
   cursor: pointer;
   z-index: 33300;
+  opacity: 0;
+  pointer-events: none;
 
   span {
     position: absolute;
     height: 6px;
     border-radius: 3px;
-    border: 1px solid black;
+    border: 1px solid var(--color-text-reverse);
     width: 100%;
-    background: black;
+    background: var(--color-text-reverse);
     top: 0;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     &:nth-child(1) {

@@ -1,17 +1,18 @@
 // HERE ARE GLOBAL STYLES
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 .color-mode-wrap {
-  --color-background: white;
+  --color-background: var(--gray-light);
+  --color-white: white;
   --color-text: black;
+  --color-text-reverse: white;
+  --color-primary: rgb(0, 202, 253);
+  --color-secondary: rgb(0, 107, 230);
 
-  --color-primary: rgb(32, 184, 120);
-  --color-secondary: black;
-
-  --color-success: rgb(0, 224, 101);
-  --color-error: rgb(255, 0, 106);
+  --color-success: rgb(0, 145, 65);
+  --color-error: rgb(0, 255, 179);
   --color-warning: rgb(255, 153, 0);
 
-  --color-accent-1: rgb(86, 255, 199);
+  --color-accent-1: rgb(230, 230, 230);
   --color-accent-2: rgb(41, 147, 189);
   --color-accent-3: rgb(255, 0, 119);
   --color-accent-4: rgb(132, 0, 255);
@@ -22,6 +23,7 @@
   --box-shadow-medium: 0 1px 4px 1px rgba(0, 0, 0, 0.158);
   --box-shadow-big: 0 1px 8px 1px rgba(0, 0, 0, 0.219);
   --gray-light: rgb(247, 247, 247);
+  --gray-light-medium: rgb(231, 231, 231);
   --gray-medium: rgb(207, 207, 207);
 
   --color-gradient-1: linear-gradient(

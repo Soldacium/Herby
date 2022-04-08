@@ -28,7 +28,10 @@ const availableSizes: string[] = ["1920x1200", "1200x800", "900x600"];
 
 const linkedLogos = ExampleResults.slice(0, 3);
 const similarLogos = ExampleResults.slice(0, 6);
-const image = "/src/shared/assets/icons/png.svg";
+const image = "/src/shared/assets/backgrounds/fc-barcelona.svg";
+
+const tags = ["sport", "football", "junior league"];
+const licence = "Basic licence";
 </script>
 <template>
   <div class="wrapper">
@@ -41,13 +44,22 @@ const image = "/src/shared/assets/icons/png.svg";
         <div class="info">
           <div class="name">{{ placeholder }}</div>
           <div class="associated">Temporary club</div>
+          <div class="licence">
+            <b>Licence: </b>
+            {{ licence }}
+          </div>
+          <div class="tags">
+            <div class="tag" v-for="tag in tags">
+              {{ tag }}
+            </div>
+          </div>
         </div>
         <div class="download">
           <div class="download-options">
             <div class="section-title">Format</div>
             <div class="image-types">
               <button
-                class="image-type option-button"
+                class="image-type button-option"
                 v-for="aType in availableTypes"
                 @click="downloadOptions.imageType = aType"
                 :class="
@@ -65,7 +77,7 @@ const image = "/src/shared/assets/icons/png.svg";
             <div class="section-title">Size</div>
             <div class="image-sizes" v-if="downloadOptions.imageType != 'svg'">
               <button
-                class="image-size option-button"
+                class="image-size button-option"
                 v-for="size in availableSizes"
                 @click="downloadOptions.imageSize = size"
                 :class="
@@ -76,7 +88,12 @@ const image = "/src/shared/assets/icons/png.svg";
               </button>
             </div>
           </div>
-          <button class="download-button">Get this logo</button>
+          <div class="buttons">
+            <button class="button-download">Get this logo</button>
+            <button class="button-like">
+              <img src="/src/shared/assets/icons/download.svg" alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -100,18 +117,19 @@ const image = "/src/shared/assets/icons/png.svg";
 </template>
 <style lang="scss" scoped>
 .wrapper {
-  padding: 5% 10%;
+  padding: 10% 13%;
 
   .section-title {
     margin-top: 1em;
-    font-weight: 600;
+    // font-weight: 600;
+    color: var(--gray-medium);
     font-size: 0.9em;
-    //width: 50%;
-    color: rgb(58, 58, 58);
-    border-left: 4px solid rgb(58, 58, 58);
-    background-color: rgb(247, 247, 247);
-    border-radius: 0 10px 10px 0;
-    padding: 10px 20px;
+    width: 50%;
+    //color: rgb(58, 58, 58);
+    // border-bottom: 1px solid var(--gray-medium);
+    //background-color: rgb(247, 247, 247);
+    // border-radius: 0 10px 10px 0;
+    padding: 6px 0;
     position: relative;
     display: inline-block;
   }
@@ -129,7 +147,7 @@ const image = "/src/shared/assets/icons/png.svg";
     .image-bg {
       z-index: 1;
       width: 200%;
-      opacity: 0.05;
+      opacity: 0;
       pointer-events: none;
       position: absolute;
       top: -5%;
@@ -159,15 +177,31 @@ const image = "/src/shared/assets/icons/png.svg";
         font-weight: 500;
         font-size: 2em;
       }
+
+      .licence {
+        margin-top: 2em;
+      }
+
+      .tags {
+        display: flex;
+
+        .tag {
+          padding: 0.4em 0.8em;
+          margin: 0.5em;
+          border: 1px solid rgb(230, 230, 230);
+          border-radius: 10px;
+          background-color: white;
+        }
+      }
     }
 
     .download {
       .download-options {
-        .option-button {
+        .button-option {
           margin: 10px;
           border: 1px solid rgb(255, 255, 255);
           border-radius: 10px;
-          background-color: transparent;
+          background-color: white;
           cursor: pointer;
           transition: 0.1s ease;
           padding: 15px;
@@ -217,33 +251,41 @@ const image = "/src/shared/assets/icons/png.svg";
           }
         }
       }
-
-      .download-button {
-        $button-color: rgb(41, 41, 41);
-        width: 100%;
+      .buttons {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1.5em;
-        margin-top: 4em;
-        font-size: 2em;
-        line-height: 0;
-        border: 4px solid $button-color;
-        border-radius: 10px;
-        background-color: white;
-        cursor: pointer;
-        color: black;
-        transition: 0.1s ease;
+        button {
+          $button-color: var(--color-secondary);
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 4em;
+          font-size: 2em;
+          line-height: 0;
+          border: 4px solid $button-color;
+          border-radius: 10px;
+          background-color: white;
+          cursor: pointer;
+          color: $button-color;
+          transition: 0.1s ease;
+          height: 3em;
 
-        &:hover {
-          box-shadow: 0 0 6px 0 rgb(201, 201, 201);
-          background-color: $button-color;
+          &:hover {
+            box-shadow: 0 0 6px 0 rgb(201, 201, 201);
+            background-color: $button-color;
 
-          color: white;
+            color: white;
+          }
+
+          img {
+            height: 0.8em;
+          }
+        }
+        .button-download {
         }
 
-        img {
-          height: 0.8em;
+        .button-like {
+          width: 3em;
           margin-left: 0.5em;
         }
       }

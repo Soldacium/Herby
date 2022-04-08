@@ -8,20 +8,12 @@ const route = useRoute();
 const mode = ref("home");
 let currentRoute = "";
 
-onMounted(() => {
-  // mode.value = route.path.substring(route.path.length - 4);
-});
-
 const search = () => {
   let queryPath = "/x/search";
   if (currentRoute !== queryPath) {
     router.push(queryPath);
   }
 };
-
-watch(mode, (modeNew) => {
-  console.log(modeNew);
-});
 
 watch(route, (newRoute, oldRoute) => {
   newRoute.path.substring(route.path.length - 4) == "home"
@@ -31,15 +23,19 @@ watch(route, (newRoute, oldRoute) => {
 </script>
 <template>
   <div class="wrap">
-    <div class="input-wrap" :class="mode == 'home' ? 'large' : 'small'">
-      <div class="text" :class="mode == 'home' ? 'visible' : 'hidden'">
-        <div class="big">
-          Get one of the <b>1000+</b> available logos & crests
-        </div>
+    <div class="site-title" :class="mode == 'home' ? 'visible' : 'hidden'">
+      Sicon
+    </div>
+    <div class="text" :class="mode == 'home' ? 'visible' : 'hidden'">
+      <div class="big"><b>Official</b> database for team logos and crests</div>
+      <!--
         <div class="small">
           Download in svg/png/jpg formats for your convinience and use for free
         </div>
-      </div>
+
+        -->
+    </div>
+    <div class="input-wrap" :class="mode == 'home' ? 'large' : 'small'">
       <select name="pets" class="">
         <option value="">All</option>
         <option value="dog">jpg</option>
@@ -82,6 +78,7 @@ watch(route, (newRoute, oldRoute) => {
   </div>
 </template>
 <style lang="scss" scoped>
+$color: var(--color-accent-1);
 .wrap {
   display: flex;
   flex-direction: column;
@@ -90,23 +87,47 @@ watch(route, (newRoute, oldRoute) => {
   padding: 50px calc(30% - 50px);
   margin-bottom: 2em;
 }
-// to component?
 
+*:not(input, button, select) {
+  color: white;
+}
+// to component?
+.site-title {
+  font-size: 15em;
+  margin-bottom: 1em;
+  margin-bottom: 0.1em;
+  //border-bottom: 4px solid $color;
+  text-shadow: 0 0 6px rgba(0, 27, 114, 0.432);
+
+  height: 1em;
+  overflow: hidden;
+  transition: 0.2s ease;
+
+  &::first-letter {
+    // color: rgb(0, 228, 57);
+  }
+
+  &.hidden {
+    height: 0;
+    border-color: transparent;
+    margin-bottom: 0;
+  }
+}
 .text {
   transition: 0.2s ease;
   opacity: 1;
+  position: relative;
   .big {
-    font-size: 2.4em;
+    font-size: 1.8em;
     font-weight: 600;
     margin-bottom: 0.5em;
-    position: absolute;
-    left: 130px;
+
     width: 100%;
     white-space: nowrap;
     top: -20px;
 
     b {
-      color: rgb(0, 216, 54);
+      color: $color;
     }
   }
   .small {
@@ -125,13 +146,18 @@ watch(route, (newRoute, oldRoute) => {
   width: 100%;
   display: flex;
   padding: 5em 3em;
-  // border: 2px solid black;
-  background-color: rgb(248, 248, 248);
+  // border: 1px solid rgb(221, 221, 221);
+  // background-color: rgb(248, 248, 248);
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
+  // box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
   transition: 0.3s ease;
 
+  /*
+  &:hover {
+    box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
+  }
+  */
   &.small {
     padding: 2em 2em;
   }
@@ -141,6 +167,7 @@ watch(route, (newRoute, oldRoute) => {
     padding: 5px;
     border: 1px solid var(--gray-medium);
     border-right: 0px;
+    border-radius: 10px 0 0 10px;
   }
 
   input {
@@ -176,6 +203,7 @@ watch(route, (newRoute, oldRoute) => {
     border: 1px solid var(--gray-medium);
     background-color: white;
     border-left: 0;
+    border-radius: 0 10px 10px 0;
     img {
       width: 20px;
     }

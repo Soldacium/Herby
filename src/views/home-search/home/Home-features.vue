@@ -3,10 +3,13 @@ const features = [0, 1, 2, 3];
 </script>
 <template>
   <div class="wrapper">
+    <!--
     <div class="title">Explore features</div>
+    -->
+
     <div class="features">
       <div class="feature" v-for="feature in features">
-        <img src="" alt="" />
+        <img src="/src/shared/assets/icons/sports-trophy.svg" alt="" />
         <div class="feature-name">Feature</div>
         <div class="feature-description">This is description</div>
       </div>
@@ -15,8 +18,7 @@ const features = [0, 1, 2, 3];
 </template>
 <style lang="scss" scoped>
 .wrapper {
-  padding: 0 10%;
-  margin-top: 6em;
+  margin-top: 2em;
   margin-bottom: 6em;
 }
 
@@ -35,14 +37,16 @@ const features = [0, 1, 2, 3];
 
   .feature {
     position: relative;
-    flex: 1 1 20em;
+    flex: 1 1 12em;
     padding: 2em;
     border: 1px solid rgb(206, 206, 206);
     margin: 0 10px;
     border-radius: 10px;
-    min-height: 20vh;
+    min-height: 15vh;
     display: flex;
     flex-direction: column;
+    background-color: white;
+    // box-shadow: 0 3px 6px rgba(0, 0, 0, 0.377);
 
     .feature-name {
       margin-top: auto;
