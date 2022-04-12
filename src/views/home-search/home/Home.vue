@@ -11,6 +11,7 @@ const post = ref({
   body: "",
 });
 onMounted(async () => {
+  /*
   await fetch("https://jsonplaceholder.typicode.com/posts/1")
     .then((response) => response.json())
     .then((data) => {
@@ -20,7 +21,13 @@ onMounted(async () => {
     });
 
   return { post };
+  */
+  await wait(1000).then(() => {console.log("xd")})
 });
+
+  const wait = (ms: number): Promise < any > => {
+    return new Promise(res => setTimeout(res, ms));
+  }
 </script>
 <template>
   <HomeFeatures></HomeFeatures>

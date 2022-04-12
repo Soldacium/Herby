@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import exampleResults from "../home-search/home/example-result";
+import SearchResult from "../../shared/components/SearchResult.vue";
 const tags = ["Major league", "Football", "Basketball"];
+
 </script>
 <template>
   <div class="wrapper">
@@ -31,32 +33,80 @@ const tags = ["Major league", "Football", "Basketball"];
           <option value="hamster">png</option>
         </select>
       </div>
+      <div class="popular">
+        <div class="result" v-for="result in exampleResults">
+          <SearchResult :result="result"></SearchResult>          
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
-.sort-options {
+
+.wrapper{
+  padding: 6em 15%;
+}
+
+.info{
   display: flex;
-  transition: 0.3s ease;
-  width: 100%;
-  margin-top: 2em;
-
-  &.hidden {
-    height: 0;
-    overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .name{
+    font-size: 6em;
   }
 
-  &.visible {
-    height: 50px;
-  }
+        .tags {
+        display: flex;
 
-  select {
-    flex-shrink: 0;
-    flex: 1 1;
-    padding: 5px;
-    border: 1px solid var(--gray-medium);
-    margin: 0.5em;
-    border-radius: 10px;
+        .tag {
+          padding: 0.4em 0.8em;
+          margin: 0.5em;
+          border: 1px solid rgb(230, 230, 230);
+          border-radius: 10px;
+          background-color: white;
+        }
+      }
+}
+.icons{
+  .sort-options {
+    display: flex;
+    transition: 0.3s ease;
+    width: 100%;
+    margin-top: 2em;
+
+    &.hidden {
+      height: 0;
+      overflow: hidden;
+    }
+
+    &.visible {
+      height: 50px;
+    }
+
+    select {
+      flex-shrink: 0;
+      flex: 1 1;
+      padding: 5px;
+      border: 1px solid var(--gray-medium);
+      margin: 0.5em;
+      border-radius: 10px;
+    }
+  }  
+
+  .popular{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .result{
+      flex: 1 1 15rem;
+      max-width: 17rem;
+      margin: 0.5em;
+
+    }
   }
 }
+
 </style>

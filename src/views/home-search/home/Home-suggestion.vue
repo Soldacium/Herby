@@ -63,13 +63,14 @@ form {
   }
 
   button {
+    border: 1px solid var(--gray-medium);
+    background: var(--color-secondary);
+    color: white;
+    padding: 0.8em 2em;
+    font-size: 1.6em;
     margin-top: 1em;
-    padding: 0.5em 1em;
-    border: 2px solid rgb(0, 0, 0);
-    background-color: transparent;
-    font-size: 1.3em;
-    font-weight: 600;
     border-radius: 10px;
+    cursor: pointer;
   }
 }
 </style>

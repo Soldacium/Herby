@@ -77,10 +77,20 @@ viewBox="0 0 900 600"
         </Suspense>
       </transition>      
     -->
-      <KeepAlive>
-        <Search></Search>
-      </KeepAlive>
-      <component :is="Component"></component>
+    <KeepAlive>
+      <Search></Search>
+    </KeepAlive>
+    <transition :name="route.meta.transition || 'fade'" mode="out-in">
+      <Suspense>
+        <KeepAlive>
+<div><component :is="Component"></component></div>          
+        </KeepAlive>
+
+      
+      <template #fallback> <div>Loading</div> </template>
+      </Suspense>
+    </transition>
+
     </router-view>
   </div>
 </template>

@@ -31,11 +31,11 @@ const pages = [1, 2, 3];
       </div>
     </div>
     <div class="pager">
-      <div class="left">&lt;</div>
+      <button class="pager-button left"><img src="/src/shared/assets/icons/left.svg" alt=""></button>
       <div class="pages">
         <div class="page" v-for="page in pages">{{ page }}</div>
       </div>
-      <div class="right">&gt;</div>
+      <button class="pager-button right"><img src="/src/shared/assets/icons/right.svg" alt=""></button>
     </div>
   </div>
 </template>
@@ -60,6 +60,14 @@ const pages = [1, 2, 3];
   margin-top: 4em;
   padding-top: 1em;
 
+  .pager-button{
+    background-color: transparent;
+    border: none;
+    img{
+      height: 2em;
+    }
+  }
+
   .left {
     margin-right: auto;
   }
@@ -76,8 +84,9 @@ const pages = [1, 2, 3];
       justify-content: center;
       align-items: center;
       margin: 5px;
-      font-size: 1.3em;
-    }
+      font-size: 1.4em;
+      background-color: white;
+      }
   }
   .right {
     margin-left: auto;

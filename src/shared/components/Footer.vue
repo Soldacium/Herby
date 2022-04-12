@@ -24,6 +24,7 @@ import InputBasic from "../../shared/components/InputBasic.vue";
       </div>
     </section>      
     -->
+    <!--
     <div class="footer-background">
       <svg
         id="visual"
@@ -43,7 +44,9 @@ import InputBasic from "../../shared/components/InputBasic.vue";
           ></path>
         </g>
       </svg>
-    </div>
+    </div>      
+    -->
+
     <section class="section-two">
       <div class="about">
         <img
@@ -83,7 +86,7 @@ import InputBasic from "../../shared/components/InputBasic.vue";
 <style lang="scss" scoped>
 .wrapper {
   // background-color: rgb(4, 0, 255);
-  min-height: 50vh;
+  // min-height: 40vh;
   min-width: 100vw;
   position: relative;
   display: flex;
@@ -94,15 +97,17 @@ import InputBasic from "../../shared/components/InputBasic.vue";
   padding-top: 0;
   padding-bottom: 0;
   // background: var(--color-gradient-1);
-  background-color: rgb(255, 255, 255);
-  border-radius: 2em 2em 0 0;
-  //border-top: 1px solid gray;
+  // background-color: rgb(131, 131, 131);
+  // border-radius: 2em 2em 0 0;
+  background-color: white;
+  border-top: 1px solid var(--gray-light-medium);
 }
 
 .footer-background {
   position: absolute;
   right: 0;
   bottom: 0;
+  pointer-events: none;
 }
 * {
   color: rgb(48, 48, 48);
@@ -119,14 +124,14 @@ section {
     padding: 0;
     li {
       a {
-        color: var(--color-white);
+        // color: var(--color-white);
         text-decoration: none;
       }
     }
   }
 
   h3 {
-    color: var(--color-white);
+    // color: var(--color-white);
     white-space: nowrap;
   }
 }
@@ -142,7 +147,7 @@ section {
     .text {
       text-align: left;
       > * {
-        color: var(--color-white);
+        // color: var(--color-white);
       }
       .top {
         font-size: var(--text-size-smaller);
@@ -166,7 +171,7 @@ section {
       margin-bottom: 1em;
     }
     .text {
-      color: var(--color-white);
+      // color: var(--color-white);
     }
 
     .links {
@@ -200,7 +205,7 @@ section {
 .section-three {
   border: none;
   text-align: center;
-  color: var(--color-white);
+  // color: var(--color-white);
   display: flex;
   justify-content: center;
 }
