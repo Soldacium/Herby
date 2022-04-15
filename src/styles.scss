@@ -5,7 +5,7 @@
   --color-white: white;
   --color-text: black;
   --color-text-reverse: white;
-  --color-primary: rgb(0, 202, 253);
+  --color-primary: rgb(0, 67, 192);
   --color-secondary: rgb(0, 107, 230);
 
   --color-success: rgb(0, 145, 65);
@@ -28,8 +28,8 @@
 
   --color-gradient-1: linear-gradient(
     60deg,
-    rgb(0, 0, 0) 0%,
-    rgb(48, 48, 48) 100%
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
   );
 
   --text-size-smaller: calc(1em - 2px);
@@ -72,6 +72,7 @@ body {
 button {
   font-family: "Roboto", sans-serif;
   color: var(--color-text);
+  cursor: pointer;
 }
 
 textarea {
@@ -99,12 +100,18 @@ textarea {
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: black;
+    --color-primary: rgb(0, 67, 192);
+    --color-secondary: rgb(0, 107, 230);
+    background: linear-gradient(
+      60deg,
+      var(--color-primary) 0%,
+      var(--color-secondary) 100%
+    );
   }
 
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-secondary);
+    background: var(--color-secondary);
   }
 }
 

@@ -26,8 +26,12 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/club/:clubname",
-    component: () => import("./views/club/Club.vue")
-  }
+    component: () => import("./views/club/Club.vue"),
+  },
+  {
+    path: "/contribute/",
+    component: () => import("./views/contribute/Contribute.vue"),
+  },
 ];
 
 const router = createRouter({

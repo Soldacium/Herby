@@ -80,6 +80,7 @@ import InputBasic from "../../shared/components/InputBasic.vue";
         </ul>
       </div>
     </section>
+    <button class="feedback-button">Something not right? Report issue!</button>
     <section class="section-three">&#x24D2; 2022 All Rights Reserved</section>
   </div>
 </template>
@@ -94,13 +95,14 @@ import InputBasic from "../../shared/components/InputBasic.vue";
   justify-content: center;
   align-items: center;
   padding: var(--padding-welcome-page);
-  padding-top: 0;
+  padding-top: 2em;
   padding-bottom: 0;
   // background: var(--color-gradient-1);
   // background-color: rgb(131, 131, 131);
   // border-radius: 2em 2em 0 0;
-  background-color: white;
+  background: var(--color-gradient-1);
   border-top: 1px solid var(--gray-light-medium);
+  margin-top: 2em;
 }
 
 .footer-background {
@@ -110,7 +112,7 @@ import InputBasic from "../../shared/components/InputBasic.vue";
   pointer-events: none;
 }
 * {
-  color: rgb(48, 48, 48);
+  color: rgb(231, 231, 231);
 }
 
 section {
@@ -208,5 +210,34 @@ section {
   // color: var(--color-white);
   display: flex;
   justify-content: center;
+}
+
+.feedback-button {
+  $button-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3em;
+  margin-top: 2em;
+  font-size: 1.5em;
+  line-height: 0;
+  border: 4px solid $button-color;
+  border-radius: 10px;
+  background-color: $button-color;
+  cursor: pointer;
+  color: black;
+  transition: 0.1s ease;
+
+  &:hover {
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.24);
+    background-color: transparent;
+
+    color: $button-color;
+  }
+
+  img {
+    height: 0.8em;
+    margin-left: 0.5em;
+  }
 }
 </style>

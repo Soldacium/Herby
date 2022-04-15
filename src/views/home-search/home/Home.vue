@@ -22,17 +22,20 @@ onMounted(async () => {
 
   return { post };
   */
-  await wait(1000).then(() => {console.log("xd")})
+  await wait(1000).then(() => {
+    console.log("xd");
+  });
 });
 
-  const wait = (ms: number): Promise < any > => {
-    return new Promise(res => setTimeout(res, ms));
-  }
+const wait = (ms: number): Promise<any> => {
+  return new Promise((res) => setTimeout(res, ms));
+};
 </script>
 <template>
-  <HomeFeatures></HomeFeatures>
   <HomeNewest></HomeNewest>
+
   <HomeAbout></HomeAbout>
+  <HomeFeatures></HomeFeatures>
   <HomeExplore></HomeExplore>
   <HomeSuggestion></HomeSuggestion>
 </template>

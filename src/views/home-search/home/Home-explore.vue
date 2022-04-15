@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
+</script>
 <template>
   <div class="wrapper">
     <div class="text">
@@ -12,7 +14,7 @@
         voluptas, alias ratione error quo animi, repudiandae quis autem! Nostrum
         fugiat quam minus.
       </div>
-      <button>Submit your own</button>
+      <ButtonBasic>Submit your own</ButtonBasic>
     </div>
     <div class="images">
       <img
@@ -29,10 +31,11 @@
   </div>
 </template>
 <style lang="scss" scoped>
+$min-height: 50vh;
 .wrapper {
   margin-top: 10em;
   display: flex;
-  min-height: 60vh;
+  min-height: $min-height;
   flex-wrap: wrap;
 
   .images {
@@ -42,7 +45,7 @@
     margin-bottom: 3em;
     flex-shrink: 0;
     flex: 1 1 20em;
-    min-height: 60vh;
+    min-height: $min-height;
     img {
       width: 100%;
       position: absolute;
@@ -64,6 +67,7 @@
 
   .text {
     flex: 1 1 30em;
+    padding: 2em;
     .title {
       font-size: 4em;
       font-weight: 600;
@@ -74,17 +78,6 @@
 
     .description {
       font-size: 1.3em;
-    }
-
-    button {
-      border: 1px solid var(--gray-medium);
-      background: var(--color-secondary);
-      color: white;
-      padding: 0.8em 2em;
-      font-size: 1.6em;
-      margin-top: 2em;
-      border-radius: 10px;
-      cursor: pointer;
     }
   }
 }

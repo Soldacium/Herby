@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
+</script>
 <template>
   <div class="wrapper">
     <div class="text">
@@ -15,7 +17,7 @@
           rows="10"
           placeholder="Message"
         ></textarea>
-        <button>Send</button>
+        <ButtonBasic>Send</ButtonBasic>
       </form>
     </div>
   </div>
@@ -44,33 +46,23 @@
 form {
   display: flex;
   flex-direction: column;
+  $font-size: 1em;
 
   input {
     padding: 0.5em 1em;
     border: 1px solid rgb(214, 214, 214);
     border-radius: 10px;
-    font-size: 1.3em;
+    font-size: $font-size;
   }
 
   textarea {
     resize: vertical;
     margin-top: 1em;
     padding: 0.5em 1em;
-    font-size: 1.3em;
+    font-size: $font-size;
     border: 1px solid rgb(214, 214, 214);
     border-radius: 10px;
-    min-width: 40vw;
-  }
-
-  button {
-    border: 1px solid var(--gray-medium);
-    background: var(--color-secondary);
-    color: white;
-    padding: 0.8em 2em;
-    font-size: 1.6em;
-    margin-top: 1em;
-    border-radius: 10px;
-    cursor: pointer;
+    min-width: 35vw;
   }
 }
 </style>

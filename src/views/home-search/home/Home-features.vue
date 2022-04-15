@@ -1,5 +1,31 @@
 <script lang="ts" setup>
-const features = [0, 1, 2, 3];
+interface Feature {
+  image: string;
+  name: string;
+  description: string;
+}
+const features: Feature[] = [
+  {
+    image: "/src/shared/assets/icons/add.svg",
+    name: "Contribute",
+    description: "Add your club's logo or crest for all to see and use",
+  },
+  {
+    image: "/src/shared/assets/icons/team.svg",
+    name: "Search",
+    description: "Placeholder description",
+  },
+  {
+    image: "/src/shared/assets/icons/sports-trophy.svg",
+    name: "Expolore",
+    description: "View team's main crest and all it's veriations",
+  },
+  {
+    image: "/src/shared/assets/icons/star.svg",
+    name: "Save",
+    description: "Placeholder description",
+  },
+];
 </script>
 <template>
   <div class="wrapper">
@@ -9,9 +35,9 @@ const features = [0, 1, 2, 3];
 
     <div class="features">
       <div class="feature" v-for="feature in features">
-        <img src="/src/shared/assets/icons/sports-trophy.svg" alt="" />
-        <div class="feature-name">Feature</div>
-        <div class="feature-description">This is description</div>
+        <img :src="feature.image" alt="" />
+        <div class="feature-name">{{ feature.name }}</div>
+        <div class="feature-description">{{ feature.description }}</div>
       </div>
     </div>
   </div>
@@ -19,7 +45,6 @@ const features = [0, 1, 2, 3];
 <style lang="scss" scoped>
 .wrapper {
   margin-top: 2em;
-  margin-bottom: 6em;
 }
 
 .title {
@@ -38,18 +63,23 @@ const features = [0, 1, 2, 3];
   .feature {
     position: relative;
     flex: 1 1 12em;
-    padding: 2em;
-    border: 1px solid rgb(206, 206, 206);
-    margin: 0 10px;
+    padding: 3em;
+    // border: 1px solid rgb(206, 206, 206);
+    margin: 0 0.3em;
     border-radius: 10px;
     min-height: 15vh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+
     background-color: white;
     // box-shadow: 0 3px 6px rgba(0, 0, 0, 0.377);
 
+    img {
+      padding-bottom: 1em;
+      flex-shrink: 0;
+    }
     .feature-name {
-      margin-top: auto;
       font-weight: 600;
     }
   }

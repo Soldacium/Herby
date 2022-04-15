@@ -37,7 +37,32 @@ viewBox="0 0 900 600"
 </script>
 <template>
   <div class="home-search-wrap">
+    <div class="home-search-background">
+      <!--
+        <img src="/src/shared/assets/backgrounds/abstract02.png" alt="" />
+      -->
+    </div>
     <div class="background" id="home-search-background">
+      <!-- 
+      <svg
+        id="visual"
+        viewBox="0 0 900 600"
+        width="900"
+        height="600"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+      >
+        <g transform="translate(479.3393667347116 308.181250191362)">
+          <path
+            d="M78.4 -113.8C98.9 -93.1 110.8 -66.5 125.3 -37.1C139.8 -7.7 156.9 24.4 147.5 46.2C138.1 68 102.1 79.5 73.1 95.6C44.1 111.7 22 132.3 -4.3 138.2C-30.6 144.1 -61.1 135.1 -96.6 121.2C-132.1 107.2 -172.6 88.2 -193 55.6C-213.4 23 -213.7 -23.3 -196.4 -59.9C-179.1 -96.5 -144.2 -123.5 -108.5 -139.2C-72.9 -155 -36.4 -159.5 -3.7 -154.4C29 -149.2 58 -134.5 78.4 -113.8"
+            fill="#16c6ff"
+          ></path>
+        </g>
+      </svg>        
+      -->
+
+      <!--
       <svg
         id="visual"
         viewBox="0 0 900 600"
@@ -60,7 +85,8 @@ viewBox="0 0 900 600"
           stroke-linecap="round"
           stroke-linejoin="miter"
         ></path>
-      </svg>
+      </svg>        
+      -->
     </div>
     <router-view v-slot="{ Component, route }">
       <!--
@@ -77,20 +103,18 @@ viewBox="0 0 900 600"
         </Suspense>
       </transition>      
     -->
-    <KeepAlive>
-      <Search></Search>
-    </KeepAlive>
-    <transition :name="route.meta.transition || 'fade'" mode="out-in">
-      <Suspense>
-        <KeepAlive>
-<div><component :is="Component"></component></div>          
-        </KeepAlive>
+      <KeepAlive>
+        <Search></Search>
+      </KeepAlive>
+      <transition :name="route.meta.transition || 'fade'" mode="out-in">
+        <Suspense>
+          <KeepAlive>
+            <div><component :is="Component"></component></div>
+          </KeepAlive>
 
-      
-      <template #fallback> <div>Loading</div> </template>
-      </Suspense>
-    </transition>
-
+          <template #fallback> <div>Loading</div> </template>
+        </Suspense>
+      </transition>
     </router-view>
   </div>
 </template>
@@ -103,6 +127,18 @@ viewBox="0 0 900 600"
     z-index: 5;
     position: relative;
   }
+
+  .home-search-background {
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    background-repeat: repeat;
+    top: 0;
+    left: 0;
+    // background: url("/src/shared/assets/backgrounds/abstract02.png");
+    background-size: 10rem 15rem;
+    z-index: 1;
+  }
   .background {
     position: absolute;
     width: 100%;
@@ -110,16 +146,20 @@ viewBox="0 0 900 600"
     background-repeat: no-repeat;
     top: 0;
     left: 0;
-    background: url("#visual");
-    background-size: cover;
+    //background: url("#visual");
+    // background-size: cover;
     z-index: 1;
     filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.589));
 
+    img {
+      height: 100%;
+      position: relative;
+    }
     svg {
       height: auto;
-      width: 200%;
+      width: 100%;
       position: absolute;
-      top: 0;
+      top: -28%;
       display: block;
       object-fit: cover;
     }

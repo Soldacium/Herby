@@ -78,7 +78,7 @@ watch(route, (newRoute, oldRoute) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$color: var(--color-accent-1);
+$color: var(--color-secondary);
 .wrap {
   display: flex;
   flex-direction: column;
@@ -89,7 +89,7 @@ $color: var(--color-accent-1);
 }
 
 *:not(input, button, select) {
-  color: white;
+  color: var(--color-text);
 }
 // to component?
 .site-title {
@@ -97,7 +97,7 @@ $color: var(--color-accent-1);
   margin-bottom: 1em;
   margin-bottom: 0.1em;
   //border-bottom: 4px solid $color;
-  text-shadow: 0 0 6px rgba(0, 27, 114, 0.432);
+  // text-shadow: 0 0 6px rgba(95, 95, 95, 0.432);
 
   height: 1em;
   overflow: hidden;
@@ -135,7 +135,7 @@ $color: var(--color-accent-1);
     top: 30px;
     white-space: nowrap;
     left: 60px;
-    color: rgb(112, 112, 112);
+    color: rgb(0, 104, 69);
   }
 
   &.hidden {
@@ -145,21 +145,21 @@ $color: var(--color-accent-1);
 .input-wrap {
   width: 100%;
   display: flex;
-  padding: 5em 3em;
+  // padding: 5em 3em;
   // border: 1px solid rgb(221, 221, 221);
   // background-color: rgb(248, 248, 248);
   border-radius: 10px;
   position: relative;
-  // box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
+  //box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
   transition: 0.3s ease;
+  overflow: hidden;
 
-  /*
   &:hover {
     box-shadow: 0 3px 5px 0 rgb(221, 221, 221);
   }
-  */
+
   &.small {
-    padding: 2em 2em;
+    // padding: 2em 2em;
   }
   select {
     flex-shrink: 0;
@@ -174,7 +174,7 @@ $color: var(--color-accent-1);
     width: 100%;
     display: flex;
     border: 1px solid var(--gray-medium);
-    background-color: var(--color-background);
+    background-color: var(--color-white);
     transition: 0.2s ease;
     box-shadow: 0 0 8px transparent;
     padding: 0.6em 1.2em;
@@ -232,6 +232,7 @@ $color: var(--color-accent-1);
     border: 1px solid var(--gray-medium);
     margin: 0.5em;
     border-radius: 10px;
+    box-shadow: 0 3px 5px 0 rgba(221, 221, 221, 0.267);
   }
 }
 </style>

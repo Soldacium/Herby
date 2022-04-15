@@ -2,7 +2,6 @@
 import exampleResults from "../home-search/home/example-result";
 import SearchResult from "../../shared/components/SearchResult.vue";
 const tags = ["Major league", "Football", "Basketball"];
-
 </script>
 <template>
   <div class="wrapper">
@@ -35,41 +34,39 @@ const tags = ["Major league", "Football", "Basketball"];
       </div>
       <div class="popular">
         <div class="result" v-for="result in exampleResults">
-          <SearchResult :result="result"></SearchResult>          
+          <SearchResult :result="result"></SearchResult>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
-
-.wrapper{
+.wrapper {
   padding: 6em 15%;
 }
 
-.info{
+.info {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  .name{
+  .name {
     font-size: 6em;
   }
 
-        .tags {
-        display: flex;
+  .tags {
+    display: flex;
 
-        .tag {
-          padding: 0.4em 0.8em;
-          margin: 0.5em;
-          border: 1px solid rgb(230, 230, 230);
-          border-radius: 10px;
-          background-color: white;
-        }
-      }
+    .tag {
+      padding: 0.4em 0.8em;
+      margin: 0.5em;
+      border: 1px solid rgb(230, 230, 230);
+      border-radius: 10px;
+      background-color: white;
+    }
+  }
 }
-.icons{
+.icons {
   .sort-options {
     display: flex;
     transition: 0.3s ease;
@@ -93,20 +90,18 @@ const tags = ["Major league", "Football", "Basketball"];
       margin: 0.5em;
       border-radius: 10px;
     }
-  }  
+  }
 
-  .popular{
+  .popular {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 
-    .result{
-      flex: 1 1 15rem;
-      max-width: 17rem;
-      margin: 0.5em;
-
+    .result {
+      flex: 1 1 10rem;
+      max-width: 12rem;
+      margin: 0.3em;
     }
   }
 }
-
 </style>
