@@ -29,6 +29,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import("./views/club/Club.vue"),
   },
   {
+    path: "/saved/",
+    component: () => import("./views/saved/Saved.vue"),
+  },
+  {
     path: "/contribute/",
     component: () => import("./views/contribute/Contribute.vue"),
   },

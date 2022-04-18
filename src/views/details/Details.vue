@@ -58,7 +58,7 @@ const licence = "Basic licence";
         <img :src="image" alt="" class="image-normal" />
         <img :src="image" alt="" class="image-bg" />
         <button class="activate-fullscreen" @click="fullscreen = true">
-          <img src="/src/shared/assets/icons/expand.svg" alt="" />
+          <img src="/src/shared/assets/icons/expand-2.svg" alt="" />
         </button>
       </div>
       <div class="more">
@@ -301,6 +301,7 @@ const licence = "Basic licence";
         width: 100%;
         &.active {
           .info-details-expand {
+            border-color: var(--gray-light-medium);
             img {
               transform: rotate(90deg);
             }
@@ -321,10 +322,11 @@ const licence = "Basic licence";
           // padding: 0.2em 1em;
           background-color: white;
           // border: 1px solid var(--color-secondary);
-          border: none;
+          border: 1px solid transparent;
           display: flex;
           justify-content: center;
           align-items: center;
+          border-radius: 5px;
 
           img {
             height: 2em;

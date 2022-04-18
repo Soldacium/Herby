@@ -52,7 +52,7 @@ const checkPath = (path: string) => {
       <router-link to="/x/search">Search</router-link>
       <router-link to="/clubs">Clubs</router-link>
       <router-link to="/x/te">Login</router-link>
-      <router-link to="/x/te">Saved</router-link>
+      <router-link to="/saved">Saved</router-link>
       <router-link class="link-button" to="/contribute">
         <button>Add crest +</button>
       </router-link>

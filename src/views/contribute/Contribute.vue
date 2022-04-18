@@ -128,7 +128,7 @@ const deleteTag = (index: number) => {
           <img :src="imagesUrls[index]" alt="" />
           <div class="name">{{ image.name }}</div>
           <button class="delete" @click="unpickFile(image)">
-            <img src="/src/shared/assets/icons/star.svg" alt="" />
+            <img src="/src/shared/assets/icons/cancel.svg" alt="" />
           </button>
         </div>
       </div>
@@ -187,7 +187,7 @@ $black: rgb(221, 221, 221);
 $red: rgb(0, 0, 0);
 .wrapper {
   padding: 6em 13%;
-  min-height: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -272,6 +272,7 @@ $red: rgb(0, 0, 0);
         border-radius: 5px;
         transition: 0.1s ease;
         justify-content: center;
+        align-items: center;
 
         &:hover {
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.199);
@@ -338,8 +339,9 @@ $red: rgb(0, 0, 0);
         justify-content: center;
         align-items: center;
         font-size: $font-size;
+        border: 1px var(--gray-light-medium) solid;
         img {
-          height: 1em;
+          height: 1.3em;
           margin-left: 0.5em;
         }
       }

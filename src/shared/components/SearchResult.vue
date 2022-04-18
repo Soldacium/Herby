@@ -1,7 +1,43 @@
 <script lang="ts" setup>
-import { ResultImage } from "../models/result-image.model";
+import { onMounted, ref, watch } from "vue";
+import ResultImage from "../models/result-image.model";
+import { SavedCrestsService } from "../services/save.service";
 
 const props = defineProps<{ result: ResultImage }>();
+// const SavedService = new SavedCrestsService();
+const savedCrests = SavedCrestsService.crests;
+const isSaved = ref(false);
+
+onMounted(() => {
+  checkIfSaved();
+});
+
+const save = (event: Event) => {
+  event.stopPropagation();
+
+  event.preventDefault();
+
+  SavedCrestsService.saveCrest(props.result);
+};
+
+const unsave = (event: Event) => {
+  event.stopPropagation();
+
+  event.preventDefault();
+
+  SavedCrestsService.unsaveCrest(props.result);
+};
+
+const checkIfSaved = () => {
+  isSaved.value =
+    savedCrests.value.filter((saved) => saved.id === props.result.id).length > 0
+      ? true
+      : false;
+};
+
+watch(savedCrests.value, (newVal, oldVal) => {
+  checkIfSaved();
+});
 </script>
 <template>
   <div class="search-result">
@@ -22,6 +58,12 @@ const props = defineProps<{ result: ResultImage }>();
         <div class="buttons">
           <button class="download">
             <img src="/src/shared/assets/icons/download.svg" alt="" />
+          </button>
+          <button class="save" v-if="!isSaved" @click="save($event)">
+            <img src="/src/shared/assets/icons/star.svg" alt="" />
+          </button>
+          <button class="save negative" v-if="isSaved" @click="unsave($event)">
+            <img src="/src/shared/assets/icons/star-filled.svg" alt="" />
           </button>
         </div>
       </div>
@@ -200,6 +242,13 @@ const props = defineProps<{ result: ResultImage }>();
           }
           &.save {
             flex: 1 1;
+          }
+
+          &.negative {
+            // background-color: rgb(255, 255, 255);
+            img {
+              // filter: invert(0);
+            }
           }
         }
       }

@@ -1,4 +1,4 @@
-export interface ResultImage {
+export default interface ResultImage {
   name: string;
   link: string;
   id: string;
