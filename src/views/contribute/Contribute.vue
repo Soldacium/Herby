@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import DownloadOptions from "../../shared/models/download-options.model";
 import ExampleResults from "../home-search/home/example-result";
 import ButtonBasic from "../../shared/components/ButtonBasic.vue";
+import { NotificationsService } from "../../shared/services/notifications.service";
 
 let placeholder = ref("placeholder");
 
@@ -93,6 +94,18 @@ const addTag = (event: Event) => {
 const deleteTag = (index: number) => {
   tags.value.splice(index, 1);
 };
+
+const submit = () => {
+  type mesType = "error" | "warning" | "success" | "information";
+  const type: mesType = ["error", "warning", "success", "information"][
+    Math.floor(Math.random() * 4)
+  ] as mesType;
+  NotificationsService.sendNotification({
+    title: "Test notification",
+    message: "You actually thought it did something",
+    type: type,
+  });
+};
 </script>
 <template>
   <div class="wrapper">
@@ -178,7 +191,7 @@ const deleteTag = (index: number) => {
         </div>
       </section>
 
-      <ButtonBasic>Submit </ButtonBasic>
+      <ButtonBasic @click="submit()">Submit </ButtonBasic>
     </div>
   </div>
 </template>

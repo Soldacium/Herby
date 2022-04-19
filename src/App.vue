@@ -2,6 +2,7 @@
 import Home from "./views/home/Home.vue";
 import Footer from "./shared/components/Footer.vue";
 import NavMain from "./shared/components/NavMain.vue";
+import Notification from "./shared/components/Notification.vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 /*
@@ -30,6 +31,7 @@ import NavMain from "./shared/components/NavMain.vue";
     </router-view>
 
     <Footer></Footer>
+    <Notification></Notification>
   </div>
 </template>
 
