@@ -36,12 +36,15 @@ watch(route, (newRoute, oldRoute) => {
         -->
     </div>
     <div class="input-wrap" :class="mode == 'home' ? 'large' : 'small'">
+      <!--
       <select name="pets" class="">
         <option value="">All</option>
         <option value="dog">jpg</option>
         <option value="cat">svg</option>
         <option value="hamster">png</option>
-      </select>
+      </select>      
+    -->
+
       <input type="text" v-on:keyup.enter="search()" />
       <button @click="search()">
         <img src="/src/shared/assets/icons/search.svg" alt="" />
@@ -180,6 +183,7 @@ $color: var(--color-secondary);
     padding: 0.6em 1.2em;
     font-size: 1.3em;
     outline: 1px solid transparent;
+    border-radius: 10px 0 0 10px;
 
     &:hover {
       // border-color: var(--color-primary);

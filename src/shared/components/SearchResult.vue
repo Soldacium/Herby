@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from "vue";
+import ApiCrestData from "../models/api-crest-data.model";
 import ResultImage from "../models/result-image.model";
 import { SavedCrestsService } from "../services/save.service";
+import { UtilsService } from "../services/utils.service";
 
-const props = defineProps<{ result: ResultImage }>();
+const props = defineProps<{ result: ApiCrestData }>();
 // const SavedService = new SavedCrestsService();
 const savedCrests = SavedCrestsService.crests;
 const isSaved = ref(false);
@@ -41,20 +43,22 @@ watch(savedCrests.value, (newVal, oldVal) => {
 </script>
 <template>
   <div class="search-result">
-    <router-link :to="props.result.link">
-      <img :src="props.result.image" alt="" />
+    <router-link :to="UtilsService.getCrestUrl(props.result)">
+      <img :src="props.result.image_link" alt="" />
       <h1 class="name">{{ props.result.name }}</h1>
 
       <div class="result-overlay">
         <h1 class="name">{{ props.result.name }}</h1>
         <div class="formats">
+          <div class="format" v-if="props.result.image_transparent">Trans</div>
+          <div class="format" v-if="props.result.image_vector">Vector</div>
+
+          <!--
           <div class="format" v-for="format in props.result.formats">
             .{{ format }}
-            <!--
           <img :src="'/src/shared/assets/icons/' + format + '.svg'" alt="" />
-        -->
-          </div>
-        </div>
+                    </div>
+        --></div>
         <div class="buttons">
           <button class="download">
             <img src="/src/shared/assets/icons/download.svg" alt="" />

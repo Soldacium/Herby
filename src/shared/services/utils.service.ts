@@ -1,8 +1,10 @@
 import { ref, Ref, watch } from "vue";
 import ResultImage from "../models/result-image.model";
 import Notification from "../models/notification.model";
+import deburr from "lodash.deburr";
+import ApiCrestData from "../models/api-crest-data.model";
 
-class NotificationsService {
+class UtilsService {
   // static savedCrestsKey = "imagesKey";
   // private iterationsKey = "iterations";
 
@@ -18,15 +20,16 @@ class NotificationsService {
     }
     */
   }
-  public static message: Ref<Notification> = ref(<Notification>{
-    message: "",
-    title: "",
-    type: "error",
-  });
 
-  public static sendNotification(notification: Notification) {
-    this.message.value = notification;
+  public static getNormalizedString(str: string): string {
+    return deburr(str);
+  }
+
+  public static getCrestUrl(crest: ApiCrestData) {
+    return deburr(
+      `/details/${crest.id}/${crest.name.replace(" ", "-")}-${crest.place}`
+    );
   }
 }
 
-export { NotificationsService };
+export { UtilsService };

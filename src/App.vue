@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Home from "./views/home/Home.vue";
 import Footer from "./shared/components/Footer.vue";
 import NavMain from "./shared/components/NavMain.vue";
 import Notification from "./shared/components/Notification.vue";

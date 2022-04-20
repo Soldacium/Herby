@@ -5,10 +5,11 @@ import SearchResult from "../../shared/components/SearchResult.vue";
 import { SavedCrestsService } from "../../shared/services/save.service";
 import SectionSpacer from "../../shared/components/SectionSpacer.vue";
 import ResultImage from "../../shared/models/result-image.model";
+import ApiCrestData from "../../shared/models/api-crest-data.model";
 
 const saved = SavedCrestsService.crests;
 const searchQuery = ref("");
-const searched: Ref<ResultImage[]> = ref([]);
+const searched: Ref<ApiCrestData[]> = ref([]);
 onMounted(() => {
   search();
 });

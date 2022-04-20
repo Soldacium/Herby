@@ -6,11 +6,15 @@ import ExampleResults from "../home-search/home/example-result";
 import SearchResult from "../../shared/components/SearchResult.vue";
 import ButtonBasic from "../../shared/components/ButtonBasic.vue";
 import SectionSpacer from "../../shared/components/SectionSpacer.vue";
+import AddVariants from "./AddVariants.vue";
 
 let placeholder = ref("placeholder");
 let fullscreen = ref(false);
 
+const props = defineProps<{}>();
+
 onMounted(() => {
+  console.log(useRoute().params);
   getDetails();
 });
 
@@ -24,6 +28,7 @@ const getDetails = () => {
 const downloadOptions = ref({
   imageType: "png",
   imageSize: "1920x1200",
+  imageVariant: "",
 });
 const detailsExpanded = ref(false);
 const availableTypes: ("svg" | "jpg" | "png" | "zip")[] = [
@@ -32,6 +37,7 @@ const availableTypes: ("svg" | "jpg" | "png" | "zip")[] = [
   "png",
   "zip",
 ];
+const availableVariants: string[] = ["Ab", "Be", "CD", "WH"];
 const availableSizes: string[] = ["1920x1200", "1200x800", "900x600"];
 
 const linkedLogos = ExampleResults.slice(0, 3);
@@ -65,11 +71,14 @@ const licence = "Basic licence";
         <div class="info">
           <div class="name">{{ placeholder }}</div>
           <div class="associated">Temporary club</div>
+          <!--
           <div class="tags">
             <div class="tag" v-for="tag in tags">
               {{ tag }}
             </div>
-          </div>
+          </div>            
+          -->
+
           <div
             class="info-details-wrap"
             :class="detailsExpanded ? 'active' : 'inactive'"
@@ -98,7 +107,25 @@ const licence = "Basic licence";
         </div>
         <div class="download">
           <div class="download-options">
-            <div class="image-types">
+            <div class="download-option image-variants">
+              <button
+                class="image-variant button-option"
+                v-for="aType in availableVariants"
+                @click="downloadOptions.imageVariant = aType"
+                :class="
+                  downloadOptions.imageVariant == aType
+                    ? 'chosen ' + aType
+                    : 'available ' + aType
+                "
+              >
+                <img
+                  :src="'/src/shared/assets/backgrounds/fc-barcelona.svg'"
+                  alt=""
+                />
+              </button>
+            </div>
+            <SectionSpacer></SectionSpacer>
+            <div class="download-option image-types">
               <button
                 class="image-type button-option"
                 v-for="aType in availableTypes"
@@ -117,7 +144,7 @@ const licence = "Basic licence";
             </div>
 
             <div
-              class="image-sizes"
+              class="download-option image-sizes"
               v-if="
                 downloadOptions.imageType != 'svg' &&
                 downloadOptions.imageType != 'zip'
@@ -146,20 +173,22 @@ const licence = "Basic licence";
       </div>
     </div>
 
-    <!-- same club -->
+    <SectionSpacer>Add variant</SectionSpacer>
+    <AddVariants></AddVariants>
+    <!--
     <SectionSpacer>Linked</SectionSpacer>
     <div class="links linked-logos">
       <div class="logo newest-result" v-for="result in linkedLogos">
         <SearchResult :result="result"></SearchResult>
       </div>
     </div>
-    <!-- same sport -->
     <SectionSpacer>Same genre</SectionSpacer>
     <div class="links similar-logos">
       <div class="logo newest-result" v-for="result in similarLogos">
         <SearchResult :result="result"></SearchResult>
       </div>
-    </div>
+    </div>      
+    -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -390,6 +419,11 @@ const licence = "Basic licence";
       .download-options {
         // border-top: 1px solid rgb(236, 236, 236);
         // padding-top: 2em;
+
+        .download-option {
+          display: flex;
+        }
+
         .button-option {
           margin: 10px;
           border: 1px solid var(--gray-light-medium);
@@ -429,6 +463,14 @@ const licence = "Basic licence";
             font-size: 1em;
 
             &.chosen {
+            }
+          }
+        }
+
+        .image-variants {
+          button {
+            img {
+              height: 85px;
             }
           }
         }

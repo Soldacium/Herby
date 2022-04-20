@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@types/animejs": "^3.1.4",
+    "@types/lodash.deburr": "^4.1.7",
     "animejs": "^3.2.1",
+    "lodash.deburr": "^4.1.0",
     "sass": "^1.49.9",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14"

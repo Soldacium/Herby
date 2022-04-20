@@ -1,4 +1,5 @@
 import { ref, Ref, watch } from "vue";
+import ApiCrestData from "../models/api-crest-data.model";
 import ResultImage from "../models/result-image.model";
 
 class SavedCrestsService {
@@ -6,7 +7,7 @@ class SavedCrestsService {
   // private iterationsKey = "iterations";
 
   static localStorage = localStorage;
-  static crests: Ref<ResultImage[]> = ref([]);
+  static crests: Ref<ApiCrestData[]> = ref([]);
 
   // setup empty key: values if not already present
   constructor() {
@@ -32,18 +33,18 @@ class SavedCrestsService {
     }
   })();
 
-  public static getSavedCrests(): ResultImage[] {
+  public static getSavedCrests(): ApiCrestData[] {
     SavedCrestsService.crests.value = JSON.parse(
       localStorage.getItem(SavedCrestsService.savedCrestsKey) as string
-    ) as ResultImage[];
+    ) as ApiCrestData[];
     return SavedCrestsService.crests.value;
   }
 
-  public static saveCrest(crest: ResultImage): void {
+  public static saveCrest(crest: ApiCrestData): void {
     SavedCrestsService.crests.value.push(crest);
   }
 
-  public static unsaveCrest(crest: ResultImage): void {
+  public static unsaveCrest(crest: ApiCrestData): void {
     const index = SavedCrestsService.crests.value.indexOf(crest);
     SavedCrestsService.crests.value.splice(index, 1);
   }

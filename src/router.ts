@@ -17,11 +17,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: "search",
         component: () => import("./views/home-search/results/Results.vue"),
+        props: (route) => ({ query: route.query.q }),
       },
     ],
   },
   {
-    path: "/details/:name",
+    path: "/details/:id/:name",
     component: () => import("./views/details/Details.vue"),
   },
   {
