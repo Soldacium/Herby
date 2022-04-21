@@ -3,7 +3,9 @@ import ResultImage from "../models/result-image.model";
 import Notification from "../models/notification.model";
 import deburr from "lodash.deburr";
 import ApiCrestData from "../models/api-crest-data.model";
+import { v4 as uuidv4 } from "uuid";
 
+// dont need class
 class UtilsService {
   // static savedCrestsKey = "imagesKey";
   // private iterationsKey = "iterations";
@@ -26,9 +28,11 @@ class UtilsService {
   }
 
   public static getCrestUrl(crest: ApiCrestData) {
-    return deburr(
-      `/details/${crest.id}/${crest.name.replace(" ", "-")}-${crest.place}`
-    );
+    return deburr(`/details/${crest.id}/${crest.name.replace(" ", "-")}`);
+  }
+
+  public static getUniqueId() {
+    return uuidv4();
   }
 }
 

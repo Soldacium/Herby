@@ -2,17 +2,35 @@
 import exampleResults from "./example-result";
 import SearchResult from "../../../shared/components/SearchResult.vue";
 import SectionSpacer from "../../../shared/components/SectionSpacer.vue";
+import { onMounted, Ref, ref } from "vue";
+import { ApiService } from "../../../shared/services/api.service";
+import ApiCrestData from "../../../shared/models/api-crest-data.model";
+import { AsyncComponentState } from "../../../shared/models/async-state.model";
+import Loading from "../../../shared/components/Loading.vue";
 
-const results = exampleResults.slice(0, 8);
+const results: Ref<ApiCrestData[]> = ref([]);
+const state: Ref<AsyncComponentState> = ref("loading");
+
+onMounted(() => {
+  getNewest();
+});
+
+const getNewest = () => {
+  ApiService.getLatestCrests().then((res) => {
+    results.value = res;
+    state.value = "success";
+  });
+};
 </script>
 <template>
   <div class="wrapper">
     <SectionSpacer>New crests</SectionSpacer>
-    <div class="newest">
+    <div class="newest" v-if="state == 'success'">
       <div class="newest-result" v-for="result in results">
         <SearchResult :result="result"></SearchResult>
       </div>
     </div>
+    <Loading v-else></Loading>
   </div>
 </template>
 <style lang="scss" scoped>

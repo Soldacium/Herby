@@ -11,7 +11,6 @@
   color: white;
   padding: 0.8em 1.5em;
   font-size: 1.6em;
-  margin-top: 1em;
   border-radius: 10px;
   cursor: pointer;
   display: flex;

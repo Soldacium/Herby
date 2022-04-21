@@ -7,7 +7,7 @@ class SavedCrestsService {
   // private iterationsKey = "iterations";
 
   static localStorage = localStorage;
-  static crests: Ref<ApiCrestData[]> = ref([]);
+  public static crests: Ref<ApiCrestData[]> = ref([]);
 
   // setup empty key: values if not already present
   constructor() {
@@ -31,6 +31,7 @@ class SavedCrestsService {
       SavedCrestsService.crests.value = this.getSavedCrests();
       // console.log(SavedCrestsService.crests.value, this.getSavedCrests());
     }
+    console.log("inited");
   })();
 
   public static getSavedCrests(): ApiCrestData[] {
@@ -42,11 +43,13 @@ class SavedCrestsService {
 
   public static saveCrest(crest: ApiCrestData): void {
     SavedCrestsService.crests.value.push(crest);
+    this.updateLocalStorage();
   }
 
   public static unsaveCrest(crest: ApiCrestData): void {
     const index = SavedCrestsService.crests.value.indexOf(crest);
     SavedCrestsService.crests.value.splice(index, 1);
+    this.updateLocalStorage();
   }
 
   public static updateLocalStorage(): void {

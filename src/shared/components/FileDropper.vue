@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref } from "vue";
+import { UtilsService } from "../services/utils.service";
 
 const props = defineProps<{ removableInput: boolean }>();
 const emits = defineEmits<{
@@ -10,6 +11,7 @@ let placeholder = ref("placeholder");
 
 let isDraggedOver = ref(false);
 const file: Ref<File | null> = ref(null);
+const dropperId = UtilsService.getUniqueId();
 
 let filePath = ref("");
 let fileUrl = ref("");
@@ -33,7 +35,7 @@ const dragLeaveHandler = (event: Event): void => {
 
 const pickFileHandler = (): void => {
   const fileInputElement = document.getElementById(
-    "file-input"
+    dropperId
   ) as HTMLInputElement;
   fileInputElement.click();
 };
@@ -55,6 +57,7 @@ const pickFile = (files: FileList | null): void => {
   const blob = reader.readAsDataURL(files[0]);
   reader.onload = (event) => {
     fileUrl.value = reader.result as string;
+    emits("addFile", files[0] as File);
   };
   isDraggedOver.value = false;
   // fileChange.emit(file);
@@ -77,8 +80,8 @@ const unpickFile = (unpickedFile: File): void => {
     >
       <input
         type="file"
-        id="file-input"
         accept="image/*"
+        :id="dropperId"
         @change="pickFile(($event.target as HTMLInputElement).files)"
         hidden
       />
@@ -100,7 +103,6 @@ const unpickFile = (unpickedFile: File): void => {
 $black: rgb(221, 221, 221);
 $red: rgb(0, 0, 0);
 .image-upload {
-  padding: 1em;
   position: relative;
 
   .dropzone {
@@ -152,11 +154,19 @@ $red: rgb(0, 0, 0);
   }
   button.remove {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 30px;
+    top: 15px;
+    //transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     img {
-      height: 1.5em;
+      height: 30px;
     }
   }
 }

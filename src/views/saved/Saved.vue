@@ -10,6 +10,7 @@ import ApiCrestData from "../../shared/models/api-crest-data.model";
 const saved = SavedCrestsService.crests;
 const searchQuery = ref("");
 const searched: Ref<ApiCrestData[]> = ref([]);
+
 onMounted(() => {
   search();
 });
@@ -18,6 +19,7 @@ const search = () => {
   searched.value = saved.value.filter((save) =>
     save.name.toLowerCase().includes(searchQuery.value)
   );
+  console.log(searched.value);
 };
 </script>
 <template>

@@ -1,25 +1,60 @@
 <script lang="ts" setup>
 import { onMounted, Ref, ref } from "vue";
 import { useRoute } from "vue-router";
-import DownloadOptions from "../../shared/models/download-options.model";
-import ExampleResults from "../home-search/home/example-result";
-import SearchResult from "../../shared/components/SearchResult.vue";
 import ButtonBasic from "../../shared/components/ButtonBasic.vue";
 import SectionSpacer from "../../shared/components/SectionSpacer.vue";
 import AddVariants from "./AddVariants.vue";
+import Loading from "../../shared/components/Loading.vue";
+import { ApiService } from "../../shared/services/api.service";
+import { AsyncComponentState } from "../../shared/models/async-state.model";
+import NotFound from "../not-found/NotFound.vue";
 
 let placeholder = ref("placeholder");
 let fullscreen = ref(false);
 
-const props = defineProps<{}>();
+// because import does not work??? what the fuck
+
+interface ApiCrestData {
+  cloudinary_public_id: string;
+  country_id: number;
+  created_by: number;
+  created_on: string;
+  description: string;
+  height: number;
+  id: number;
+  image_link: string;
+  image_link2?: string;
+  image_link3?: string;
+  image_transparent: boolean;
+  image_vector: boolean;
+  last_updated_by: number;
+  last_updated_on: string;
+  name: string;
+  place: string;
+  revision: any | null;
+  user_id: number;
+  width: number;
+}
+
+const route = useRoute();
+const details: Ref<ApiCrestData | null> = ref(null);
+const detailsExpanded = ref(false);
+const state: Ref<AsyncComponentState> = ref("loading");
 
 onMounted(() => {
-  console.log(useRoute().params);
+  console.log(route.params);
   getDetails();
 });
 
 const getDetails = () => {
   const detailsName = useRoute().params.name;
+  const crestId = route.params.id as string;
+  state.value = "loading";
+  ApiService.getSingleCrest(crestId).then((res) => {
+    details.value = res;
+    state.value = res == null ? "error" : "success";
+    console.log(res, state.value);
+  });
   if (detailsName) {
     placeholder.value = detailsName as string;
   }
@@ -30,47 +65,48 @@ const downloadOptions = ref({
   imageSize: "1920x1200",
   imageVariant: "",
 });
-const detailsExpanded = ref(false);
+const availableSizes: string[] = ["1920x1200", "1200x800", "900x600"];
+const availableVariants: string[] = ["Ab", "Be", "CD", "WH"];
 const availableTypes: ("svg" | "jpg" | "png" | "zip")[] = [
   "svg",
   "jpg",
   "png",
   "zip",
 ];
-const availableVariants: string[] = ["Ab", "Be", "CD", "WH"];
-const availableSizes: string[] = ["1920x1200", "1200x800", "900x600"];
+/*
 
-const linkedLogos = ExampleResults.slice(0, 3);
-const similarLogos = ExampleResults.slice(0, 6);
+
 const image = "/src/shared/assets/backgrounds/fc-barcelona.svg";
 
 const tags = ["sport", "football", "junior league"];
 const licence = "Basic licence";
+*/
 </script>
 <template>
   <div class="wrapper">
     <!-- should be canvas with "magnifier" -->
     <div
+      v-show="state == 'success'"
       class="image-fullscreen-overlay"
       :class="fullscreen ? 'active' : 'inactive'"
     >
-      <img :src="image" alt="" class="image-fullscreen" />
+      <img :src="details?.image_link" alt="" class="image-fullscreen" />
       <button class="close" @click="fullscreen = false">
         <img src="/src/shared/assets/icons/cancel.svg" alt="" />
       </button>
     </div>
-    <div class="image-info">
+    <div class="image-info" v-if="state == 'success'">
       <div class="image">
-        <img :src="image" alt="" class="image-normal" />
-        <img :src="image" alt="" class="image-bg" />
+        <img :src="details?.image_link" alt="" class="image-normal" />
+        <img :src="details?.image_link" alt="" class="image-bg" />
         <button class="activate-fullscreen" @click="fullscreen = true">
           <img src="/src/shared/assets/icons/expand-2.svg" alt="" />
         </button>
       </div>
       <div class="more">
         <div class="info">
-          <div class="name">{{ placeholder }}</div>
-          <div class="associated">Temporary club</div>
+          <div class="name">{{ details?.name }}</div>
+          <div class="associated">{{ details?.place }}</div>
           <!--
           <div class="tags">
             <div class="tag" v-for="tag in tags">
@@ -91,16 +127,16 @@ const licence = "Basic licence";
             </button>
             <div class="info-details">
               <div class="licence">
-                <b>Licence: </b>
-                {{ licence }}
+                <b>Description: </b>
+                {{ details?.description }}
               </div>
               <div class="licence">
                 <b>Uploader: </b>
-                A random guy
+                {{ details?.created_by }}
               </div>
               <div class="licence">
                 <b>Upload date: </b>
-                15 - 07 - 2022
+                {{ details?.created_on }}
               </div>
             </div>
           </div>
@@ -118,14 +154,12 @@ const licence = "Basic licence";
                     : 'available ' + aType
                 "
               >
-                <img
-                  :src="'/src/shared/assets/backgrounds/fc-barcelona.svg'"
-                  alt=""
-                />
+                <img :src="details.image_link" alt="" />
               </button>
             </div>
             <SectionSpacer></SectionSpacer>
             <div class="download-option image-types">
+              <!--
               <button
                 class="image-type button-option"
                 v-for="aType in availableTypes"
@@ -139,14 +173,50 @@ const licence = "Basic licence";
                 <img
                   :src="'/src/shared/assets/icons/' + aType + '.svg'"
                   alt=""
-                />
+                /></button>                
+              -->
+
+              <button
+                class="button-option image-type"
+                @click="downloadOptions.imageType = 'vector'"
+                v-if="details?.image_vector"
+                :class="
+                  downloadOptions.imageType == 'vector'
+                    ? 'chosen '
+                    : 'available '
+                "
+              >
+                Vector
+              </button>
+              <button
+                class="button-option image-type"
+                @click="downloadOptions.imageType = 'transparent'"
+                v-if="details?.image_transparent"
+                :class="
+                  downloadOptions.imageType == 'transparent'
+                    ? 'chosen '
+                    : 'available '
+                "
+              >
+                Transparent
+              </button>
+
+              <button
+                class="button-option image-type"
+                @click="downloadOptions.imageType = 'zip'"
+                v-if="details?.image_transparent"
+                :class="
+                  downloadOptions.imageType == 'zip' ? 'chosen ' : 'available '
+                "
+              >
+                Package
               </button>
             </div>
 
             <div
               class="download-option image-sizes"
               v-if="
-                downloadOptions.imageType != 'svg' &&
+                downloadOptions.imageType != 'vector' &&
                 downloadOptions.imageType != 'zip'
               "
             >
@@ -172,9 +242,21 @@ const licence = "Basic licence";
         </div>
       </div>
     </div>
+    <div v-else-if="state === 'loading'">
+      <Loading></Loading>
+    </div>
+    <div v-else-if="state === 'error'">
+      <NotFound></NotFound>
+    </div>
 
     <SectionSpacer>Add variant</SectionSpacer>
-    <AddVariants></AddVariants>
+    <!--
+      
+    -->
+    <AddVariants
+      v-if="state === 'success'"
+      :crest="details ? details : (details as ApiCrestData)"
+    ></AddVariants>
     <!--
     <SectionSpacer>Linked</SectionSpacer>
     <div class="links linked-logos">
@@ -194,6 +276,7 @@ const licence = "Basic licence";
 <style lang="scss" scoped>
 .wrapper {
   padding: 6em 13%;
+  min-height: 100vh;
 
   .section-title {
     margin-top: 1em;

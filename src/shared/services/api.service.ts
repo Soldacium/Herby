@@ -5,23 +5,22 @@ import ApiResponse from "../models/api-response.model";
 import ApiCrestData from "../models/api-crest-data.model";
 import UploadCrestData from "../models/crest-upload-data.model";
 import CrestUploadData from "../models/crest-upload-data.model";
+import Variant from "../models/crest-variant.model";
+import CloudinaryResponse from "../models/cloudinary-response.model";
 
-class NotificationsService {
-  // static savedCrestsKey = "imagesKey";
-  // private iterationsKey = "iterations";
+interface VariantUploadData {
+  email: string;
+  name: string;
+  country_id: number;
+  place: string;
+  image_link: string;
+  image_link2: string;
+  cloudinary_public_id: string;
+  description: string;
+  id: string | number;
+}
 
-  // static localStorage = localStorage;
-  // static crests: Ref<ResultImage[]> = ref([]);
-
-  // setup empty key: values if not already present
-  constructor() {
-    // SavedCrestsService.crests.push = function() { Array.prototype.push.apply(this, arguments);  processQ();};
-    /*
-    if (this.getIterationsNumbers() == null) {
-      localStorage.setItem(this.iterationsNumbersKey, JSON.stringify([]));
-    }
-    */
-  }
+class ApiService {
   public static message: Ref<Notification> = ref(<Notification>{
     message: "",
     title: "",
@@ -44,7 +43,30 @@ class NotificationsService {
       .then((data) => data.data);
   }
 
-  public static getSingleCrest(crestId: number) {}
+  public static getSearchedCrests(query: string): Promise<ApiCrestData[]> {
+    return fetch(
+      `https://api.echosport.mobi/?component=SportLogoPublic&action=list&search=${query}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => <Promise<ApiResponse>>response.json())
+      .then((data) => data.data);
+  }
+
+  // id is just a number, but it's converted to string anyways
+  public static getSingleCrest(
+    crestId: number | string
+  ): Promise<ApiCrestData | null> {
+    return <Promise<ApiCrestData>>fetch(
+      `https://api.echosport.mobi/?component=SportLogoPublic&action=get&logo_id=${crestId}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((data: ApiResponse) => data.data);
+  }
 
   public static async uploadMainCrest(
     crestData: CrestUploadData
@@ -59,6 +81,10 @@ class NotificationsService {
       cloudinary_public_id: "",
       description: crestData.description,
     };
+
+    crestData.id
+      ? Object.defineProperty(crestToUpload, "id", crestData.id)
+      : "";
     if (crestData.fileVector) {
       await this.uploadFile(crestData.fileVector).then((uploadedFile) => {
         crestToUpload.image_link = uploadedFile.image_link;
@@ -89,20 +115,83 @@ class NotificationsService {
       .then((data) => console.log(data));
   }
 
-  public static async uploadCrestVariants(
-    variants: [{ imgVector: File; imgTransparent: File }]
-  ) {}
+  public static uploadCrestVariants(
+    variants: Variant[],
+    originalCrest: ApiCrestData,
+    email: string,
+    loadingStates: Ref<{ vector: number; other: number }[]>,
+    uploaded: Ref<boolean>
+  ) {
+    // const loadingStates: Ref<{ vector: number; other: number }[]> = ref([]);
+    // const uploaded: Ref<boolean> = ref(false);
+    variants.forEach(async (variant, i) => {
+      const loadingState = {
+        vector: 0,
+        other: 0,
+      };
+      loadingStates.value[i] = loadingState;
+      const progressVector = (progress: number) => {
+        loadingState.vector = progress;
+      };
+
+      const progressOther = (progress: number) => {
+        loadingState.other = progress;
+      };
+
+      let resV: CloudinaryResponse | undefined;
+      let resO: CloudinaryResponse | undefined;
+      if (variant.fileVector)
+        await this.uploadFile(variant.fileVector, progressVector).then(
+          (res) => (resV = res)
+        );
+      if (variant.fileNormal)
+        await this.uploadFile(variant.fileNormal, progressOther).then(
+          (res) => (resO = res)
+        );
+
+      const variantData: VariantUploadData = {
+        email: email,
+        name: variant.variantName,
+        country_id: originalCrest.country_id,
+        place: originalCrest.place,
+        image_link: resV
+          ? resV.image_link
+          : (resO as CloudinaryResponse).image_link,
+        image_link2: resO && resV ? resO.image_link : "",
+        cloudinary_public_id: resV
+          ? resV.cloudinary_public_id
+          : (resO as CloudinaryResponse).cloudinary_public_id,
+        description: variant.variantDescription,
+        id: originalCrest.id,
+      };
+
+      this.uploadCrestVariant(variantData).then((res) => {
+        uploaded.value = true;
+      });
+    });
+    //return {loading: loadingStates, uploaded: uploaded};
+  }
+
+  public static uploadCrestVariant(
+    variantData: VariantUploadData
+  ): Promise<ApiCrestData> {
+    return <Promise<ApiCrestData>>fetch(
+      "https://api.echosport.mobi/?component=SportLogoPublic&action=new",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(variantData),
+      }
+    ).then((response) => response.json());
+  }
 
   private static uploadFile(
     file: File,
     progress: (number: number, ...args: any[]) => any = () => {},
     folder = "logo"
-  ): Promise<{
-    image_link: string;
-    cloudinary_public_id: string;
-    width: number;
-    height: number;
-  }> {
+  ): Promise<CloudinaryResponse> {
     let url = "https://api.cloudinary.com/v1_1/echosport/upload",
       xhr = new XMLHttpRequest(),
       fd = new FormData(),
@@ -156,27 +245,6 @@ class NotificationsService {
       xhr.send(fd);
     });
   }
-
-  /*
-  private apiCrestDataListToResultImage(
-    crestList: ApiCrestData[]
-  ): ResultImage[] {
-    const res: ResultImage[] = [];
-
-    crestList.forEach((apiCrestData) => {
-      let resultImage: ResultImage = {
-        name: apiCrestData.name,
-        link: string;
-        id: string;
-        imageTransparent: boolean;
-        imageVector: boolean;
-        image: string;
-        image2: string;
-        description: string;
-      };
-    });
-  }
-  */
 }
 
-export { NotificationsService };
+export { ApiService };

@@ -2,16 +2,16 @@
 import { onMounted, Ref, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "../../../router";
-// const props = defineProps<{ routerState: Ref<string> }>();
 
 const route = useRoute();
 const mode = ref("home");
+const searchInput = ref("");
 let currentRoute = "";
 
 const search = () => {
   let queryPath = "/x/search";
   if (currentRoute !== queryPath) {
-    router.push(queryPath);
+    router.push({ path: queryPath, query: { search: searchInput.value } });
   }
 };
 
@@ -45,7 +45,7 @@ watch(route, (newRoute, oldRoute) => {
       </select>      
     -->
 
-      <input type="text" v-on:keyup.enter="search()" />
+      <input type="text" v-on:keyup.enter="search()" v-model="searchInput" />
       <button @click="search()">
         <img src="/src/shared/assets/icons/search.svg" alt="" />
       </button>

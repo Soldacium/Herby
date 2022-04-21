@@ -6,4 +6,5 @@ export default interface CrestUploadData {
   country_id: number; // 2
   place: string;
   description: string;
+  id?: number | string;
 }
