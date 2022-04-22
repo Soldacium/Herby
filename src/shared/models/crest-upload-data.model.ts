@@ -7,4 +7,6 @@ export default interface CrestUploadData {
   place: string;
   description: string;
   id?: number | string;
+  width: number;
+  height: number;
 }

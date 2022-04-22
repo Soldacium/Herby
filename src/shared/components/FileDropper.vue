@@ -76,7 +76,11 @@ const unpickFile = (unpickedFile: File): void => {
       @dragover="dragOverHandler($event)"
       @dragleave="dragLeaveHandler($event)"
       @click="pickFileHandler()"
-      :class="[isDraggedOver === true ? 'dragged' : 'nope', 'dropzone']"
+      :class="[
+        isDraggedOver === true ? 'dragged' : 'nope',
+        'dropzone',
+        fileUrl != '' ? 'file-present' : 'no-file',
+      ]"
     >
       <input
         type="file"
@@ -86,8 +90,13 @@ const unpickFile = (unpickedFile: File): void => {
         hidden
       />
       <div class="placeholder">
-        <p>Upload</p>
-        <img v-if="removableInput" :src="fileUrl" alt="" class="placeholder" />
+        <p v-if="!removableInput || fileUrl == ''">Upload</p>
+        <img
+          v-if="removableInput && fileUrl"
+          :src="fileUrl"
+          alt=""
+          class="placeholder"
+        />
       </div>
     </div>
     <button
@@ -100,18 +109,19 @@ const unpickFile = (unpickedFile: File): void => {
   </div>
 </template>
 <style lang="scss" scoped>
-$black: rgb(221, 221, 221);
-$red: rgb(0, 0, 0);
+$color-1: var(--color-primary);
+$color-2: var(--gray-medium);
 .image-upload {
   position: relative;
-
+  height: 100%;
   .dropzone {
     // @include flex-center();
     // @include set-colors($gray-dark, $red, $white);
     // @include set-hover-colors($black,$red,$white);
     // width: 300px;
-    height: 300px;
-    border: 2px dashed $red;
+
+    height: 100%;
+    border: 2px dashed $color-1;
     border-radius: 10px;
     cursor: pointer;
     overflow: hidden;
@@ -123,16 +133,20 @@ $red: rgb(0, 0, 0);
     position: relative;
 
     &.dragged {
-      background-color: $black;
+      background-color: $color-2;
     }
 
     &.dropped {
-      background-color: $black;
+      background-color: $color-2;
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.295);
     }
 
+    &.file-present {
+      border: 2px solid black;
+    }
+
     &:hover {
-      background-color: $black;
+      background-color: $color-2;
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.295);
     }
 
@@ -142,19 +156,25 @@ $red: rgb(0, 0, 0);
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+      height: 100%;
+      width: 100%;
       img {
         margin-left: 1rem;
-        height: 1.5rem;
+        height: 70%;
+        position: relative;
+        max-height: 15em;
       }
 
       p {
         font-size: 1.5rem;
+        color: $color-1;
       }
     }
   }
   button.remove {
     position: absolute;
-    right: 30px;
+    right: 15px;
     top: 15px;
     //transform: translate(-50%, -50%);
     background-color: transparent;

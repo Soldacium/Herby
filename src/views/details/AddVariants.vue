@@ -5,6 +5,9 @@ import { NotificationsService } from "../../shared/services/notifications.servic
 import ButtonBasic from "../../shared/components/ButtonBasic.vue";
 import ApiCrestData from "../../shared/models/api-crest-data.model";
 import { ApiService } from "../../shared/services/api.service";
+import SuccessCheck from "../../shared/components/SuccessCheck.vue";
+import Loading from "../../shared/components/Loading.vue";
+import InputBasic from "../../shared/components/InputBasic.vue";
 
 const props = defineProps<{ crest: ApiCrestData }>();
 
@@ -54,6 +57,7 @@ const removeVariant = (varaintNum: number) => {
   variantsUploadState.value.slice(varaintNum, 1);
 };
 const submitVariants = () => {
+  if (uploadStarted.value) return;
   const submittable = variants.value.some((variant) => {
     if (!isVariantCorrect(variant)) {
       NotificationsService.sendNotification({
@@ -69,6 +73,7 @@ const submitVariants = () => {
   });
 
   if (!submittable) return;
+  uploadStarted.value = true;
   ApiService.uploadCrestVariants(
     variants.value,
     props.crest,
@@ -92,12 +97,6 @@ const isVariantCorrect = (variant: Variant): boolean => {
     (!variant.fileNormal && !variant.fileVector)
     ? false
     : true;
-
-  /* 
-    ||
-    !variant.fileNormal ||
-    !variant.fileVector
-    */
 };
 
 const setVariantVector = (file: File, variant: Variant) => {
@@ -119,42 +118,93 @@ const removeVariantOther = (file: File, variant: Variant) => {
 <template>
   <div class="wrapper">
     <div class="variant" v-for="(variant, i) in variants">
-      {{ variantsUploadState[i].vector }}
-      <FileDropper
-        class="dropper"
-        :removable-input="true"
-        @add-file="setVariantVector($event, variant)"
-        @remove-file="removeVariantVector($event, variant)"
-      ></FileDropper>
-      {{ variantsUploadState[i].other }}
-      <FileDropper
-        class="dropper"
-        :removable-input="true"
-        @add-file="setVariantOther($event, variant)"
-        @remove-file="removeVariantOther($event, variant)"
-      ></FileDropper>
+      <div class="file-upload-wrap">
+        <FileDropper
+          class="dropper"
+          :removable-input="true"
+          @add-file="setVariantVector($event, variant)"
+          @remove-file="removeVariantVector($event, variant)"
+        ></FileDropper>
+        <div
+          class="file-upload-state"
+          :class="uploadStarted ? 'uploading' : 'naah'"
+        >
+          <Loading
+            v-if="uploadStarted && variantsUploadState[i].vector != 100"
+          ></Loading>
+          <SuccessCheck
+            v-else-if="variantsUploadState[i].vector === 100"
+          ></SuccessCheck>
+        </div>
+      </div>
+      <div class="file-upload-wrap">
+        <FileDropper
+          class="dropper"
+          :removable-input="true"
+          @add-file="setVariantOther($event, variant)"
+          @remove-file="removeVariantOther($event, variant)"
+        ></FileDropper>
+        <div
+          class="file-upload-state"
+          :class="uploadStarted ? 'uploading' : 'naah'"
+        >
+          <Loading
+            v-if="uploadStarted && variantsUploadState[i].other != 100"
+          ></Loading>
+          <SuccessCheck
+            v-else-if="variantsUploadState[i].other === 100"
+          ></SuccessCheck>
+        </div>
+      </div>
+
       <div class="variant-info">
-        <input
-          onkeyup="this.setAttribute('value', this.value)"
+        <InputBasic
           type="text"
-          v-model="variant.variantName"
+          @input-change="variant.variantName = $event"
           placeholder="Name"
+          :disabled="uploadStarted"
+          required
         />
-        <input
-          onkeyup="this.setAttribute('value', this.value)"
+        <InputBasic
           type="text"
-          v-model="variant.variantDescription"
+          @input-change="variant.variantDescription = $event"
           placeholder="Description (optional)"
+          :disabled="uploadStarted"
         />
       </div>
-      <button v-if="i != 0" class="variant-remove" @click="removeVariant(i)">
+      <button
+        :disabled="uploadStarted"
+        v-if="i != 0"
+        class="variant-remove"
+        @click="removeVariant(i)"
+      >
         <img src="/src/shared/assets/icons/cancel.svg" alt="" />
       </button>
     </div>
-    <button class="next-variant" @click="addNextVariant()">Next Variant</button>
-    <div class="finalize">
-      <input type="email" placeholder="Contact email" />
-      <ButtonBasic @click="submitVariants()">Submit</ButtonBasic>
+    <button
+      class="next-variant"
+      @click="addNextVariant()"
+      v-if="!uploadStarted"
+    >
+      Next Variant
+    </button>
+    <div class="finalize" v-if="!uploadFinished">
+      {{ contactEmail }}
+      <InputBasic
+        type="email"
+        placeholder="Contact email"
+        required
+        :disabled="uploadStarted"
+        @input-change="contactEmail = $event"
+      >
+      </InputBasic>
+      <ButtonBasic :disabled="uploadStarted" @click="submitVariants()"
+        >Submit
+      </ButtonBasic>
+    </div>
+    <div class="finalize success" v-else>
+      <div class="success-text">All done!</div>
+      <SuccessCheck></SuccessCheck>
     </div>
   </div>
 </template>
@@ -181,27 +231,33 @@ const removeVariantOther = (file: File, variant: Variant) => {
     padding-right: 1em;
   }
 
-  .dropper {
+  .file-upload-wrap {
     flex: 1 1 16em;
     margin-bottom: 1em;
+    position: relative;
+
+    .file-upload-state {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+
+      &.uploading {
+        pointer-events: all;
+      }
+    }
   }
   .variant-info {
     flex: 1 1 16em;
 
-    input {
-      width: 100%;
-      background-color: var(--color-background);
-      border-radius: 10px;
-      border: 1px solid var(--gray-medium);
-      padding: 0.6em 1.3em;
-      transition: 0.1s ease;
+    > * {
       margin-bottom: 1em;
-      font-size: 1.3em;
-
-      &:hover,
-      &:not([value=""]) {
-        background-color: white;
-      }
+      font-size: 1em;
     }
   }
 
@@ -248,7 +304,10 @@ const removeVariantOther = (file: File, variant: Variant) => {
 
 .finalize {
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 2em;
+  transition: 0.3s;
   input {
     width: 100%;
     background-color: var(--color-background);
@@ -258,10 +317,28 @@ const removeVariantOther = (file: File, variant: Variant) => {
     transition: 0.1s ease;
     font-size: 1.3em;
     margin-right: 1em;
+    height: 100%;
 
     &:hover,
     &:not([value=""]) {
       background-color: white;
+    }
+
+    &[value=""] {
+      border-color: red;
+    }
+  }
+
+  &.success {
+    $green: rgb(12, 161, 12);
+    border: 2px solid $green;
+    padding: 1em;
+    border-radius: 10px;
+    .success-text {
+      font-size: 3em;
+      // font-weight: 600;
+      color: $green;
+      margin-right: 20px;
     }
   }
 }

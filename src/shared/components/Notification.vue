@@ -16,7 +16,7 @@ watch(message, (newVal, oldVal) => {
 });
 const showNotification = (): void => {
   animation = anime.timeline({
-    duration: 2000,
+    duration: 3200,
     easing: "easeInOutQuad",
   });
   animation

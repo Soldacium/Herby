@@ -4,15 +4,14 @@ const emits = defineEmits<{
 }>();
 </script>
 <template>
-  <input
-    type="text"
-    class="input-basic"
+  <textarea
+    class="textarea-basic"
     onkeyup="this.setAttribute('value', this.value)"
     @input="emits('input-change', ($event.target as HTMLInputElement).value)"
-  />
+  ></textarea>
 </template>
-<style scoped lang="scss">
-.input-basic {
+<style lang="scss" scoped>
+.textarea-basic {
   width: 100%;
   background-color: var(--color-background);
   border-radius: 10px;
@@ -20,6 +19,8 @@ const emits = defineEmits<{
   padding: 0.6em 1.3em;
   transition: 0.1s ease;
   font-size: 1.3em;
+  resize: vertical;
+  height: 300px;
 
   &:hover,
   &:not([value=""]) {
@@ -27,7 +28,7 @@ const emits = defineEmits<{
   }
 
   &[value=""] {
-    // border-color: red;
+    border-color: red;
   }
 }
 </style>

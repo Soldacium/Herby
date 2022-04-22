@@ -73,6 +73,18 @@ button {
   font-family: "Roboto", sans-serif;
   color: var(--color-text);
   cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+input {
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 }
 
 textarea {
@@ -86,6 +98,11 @@ textarea {
   font-family: "Roboto", sans-serif;
 
   scroll-behavior: smooth;
+
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 
   &::-webkit-scrollbar {
     width: 10px;

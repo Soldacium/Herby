@@ -7,6 +7,7 @@ import UploadCrestData from "../models/crest-upload-data.model";
 import CrestUploadData from "../models/crest-upload-data.model";
 import Variant from "../models/crest-variant.model";
 import CloudinaryResponse from "../models/cloudinary-response.model";
+import { NotificationsService } from "./notifications.service";
 
 interface VariantUploadData {
   email: string;
@@ -17,7 +18,9 @@ interface VariantUploadData {
   image_link2: string;
   cloudinary_public_id: string;
   description: string;
-  id: string | number;
+  logo_id: string | number;
+  height: number;
+  width: number;
 }
 
 class ApiService {
@@ -69,7 +72,9 @@ class ApiService {
   }
 
   public static async uploadMainCrest(
-    crestData: CrestUploadData
+    crestData: CrestUploadData,
+    loadingState: Ref<{ vector: number; other: number }>,
+    uploaded: Ref<boolean>
   ): Promise<any> {
     const crestToUpload = {
       email: crestData.email,
@@ -85,34 +90,58 @@ class ApiService {
     crestData.id
       ? Object.defineProperty(crestToUpload, "id", crestData.id)
       : "";
+
+    const progressVector = (progress: number) => {
+      loadingState.value.vector = progress;
+    };
+
+    const progressOther = (progress: number) => {
+      loadingState.value.other = progress;
+    };
     if (crestData.fileVector) {
-      await this.uploadFile(crestData.fileVector).then((uploadedFile) => {
-        crestToUpload.image_link = uploadedFile.image_link;
-        crestToUpload.cloudinary_public_id = uploadedFile.cloudinary_public_id;
-      });
+      await this.uploadFile(crestData.fileVector, progressVector).then(
+        (uploadedFile) => {
+          crestToUpload.image_link = uploadedFile.image_link;
+          crestToUpload.cloudinary_public_id =
+            uploadedFile.cloudinary_public_id;
+        }
+      );
     }
 
     if (crestData.fileOther) {
-      await this.uploadFile(crestData.fileOther).then((uploadedFile) => {
-        crestToUpload.image_link
-          ? (crestToUpload.image_link2 = uploadedFile.image_link)
-          : () => {
-              crestToUpload.image_link = uploadedFile.image_link;
-              crestToUpload.cloudinary_public_id =
-                uploadedFile.cloudinary_public_id;
-            };
-      });
+      await this.uploadFile(crestData.fileOther, progressOther).then(
+        (uploadedFile) => {
+          crestToUpload.image_link
+            ? (crestToUpload.image_link2 = uploadedFile.image_link)
+            : () => {
+                crestToUpload.image_link = uploadedFile.image_link;
+                crestToUpload.cloudinary_public_id =
+                  uploadedFile.cloudinary_public_id;
+              };
+        }
+      );
     }
 
-    fetch("https://api.echosport.mobi/?component=SportLogoPublic&action=new", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(crestToUpload),
-    })
+    return fetch(
+      "https://api.echosport.mobi/?component=SportLogoPublic&action=new",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(crestToUpload),
+      }
+    )
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((res) => {
+        NotificationsService.sendNotification({
+          title: "Crest uploaded",
+          message: "After a review, it will be publicly available",
+          type: "success",
+        });
+        uploaded.value = true;
+        return res;
+      });
   }
 
   public static uploadCrestVariants(
@@ -124,18 +153,23 @@ class ApiService {
   ) {
     // const loadingStates: Ref<{ vector: number; other: number }[]> = ref([]);
     // const uploaded: Ref<boolean> = ref(false);
-    variants.forEach(async (variant, i) => {
+    const uploadReady = Array(variants.length).fill(false);
+    const newStates = ref([]);
+
+    variants.forEach((variant, i) => {
       const loadingState = {
         vector: 0,
         other: 0,
       };
-      loadingStates.value[i] = loadingState;
+      loadingStates.value[i] = { ...loadingState };
+    });
+    variants.forEach(async (variant, i) => {
       const progressVector = (progress: number) => {
-        loadingState.vector = progress;
+        loadingStates.value[i].vector = progress;
       };
 
       const progressOther = (progress: number) => {
-        loadingState.other = progress;
+        loadingStates.value[i].other = progress;
       };
 
       let resV: CloudinaryResponse | undefined;
@@ -162,11 +196,22 @@ class ApiService {
           ? resV.cloudinary_public_id
           : (resO as CloudinaryResponse).cloudinary_public_id,
         description: variant.variantDescription,
-        id: originalCrest.id,
+        width: 0,
+        height: 0,
+        logo_id: originalCrest.id,
       };
+      console.log(variantData);
 
       this.uploadCrestVariant(variantData).then((res) => {
-        uploaded.value = true;
+        uploadReady[i] = true;
+        if (!uploadReady.some((ready) => ready === false)) {
+          uploaded.value = true;
+          NotificationsService.sendNotification({
+            title: "Upload Completed",
+            type: "success",
+            message: `Uploaded ${variants.length} variants for ${originalCrest.name}`,
+          });
+        }
       });
     });
     //return {loading: loadingStates, uploaded: uploaded};
@@ -205,6 +250,7 @@ class ApiService {
         let progressNumber = Math.round((ev.loaded * loaded) / ev.total);
 
         progress(progressNumber);
+        console.log(progressNumber);
       });
       xhr.onerror = function () {
         console.warn({
