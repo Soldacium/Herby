@@ -7,6 +7,7 @@ import { ApiService } from "../../../shared/services/api.service";
 import ApiCrestData from "../../../shared/models/api-crest-data.model";
 import Loading from "../../../shared/components/Loading.vue";
 import { AsyncComponentState } from "../../../shared/models/async-state.model";
+import NotFound from "../../../shared/components/NotFound.vue";
 
 interface Query {
   search: string;
@@ -73,10 +74,12 @@ const getResults = (query: string) => {
       <button class="pager-button right">
         <img src="/src/shared/assets/icons/right.svg" alt="" />
       </button>
-    </div>      
+    </div>  
+    <div class="empty" v-show="state == 'error'">Nothing here :(</div>    
     -->
     <Loading v-show="state == 'loading'"></Loading>
-    <div class="empty" v-show="state == 'error'">Nothing here :(</div>
+
+    <NotFound v-show="state == 'error'"></NotFound>
   </div>
 </template>
 <style lang="scss" scoped>

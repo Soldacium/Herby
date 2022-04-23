@@ -30,7 +30,7 @@ const getNewest = () => {
         <SearchResult :result="result"></SearchResult>
       </div>
     </div>
-    <Loading v-else></Loading>
+    <Loading class="loading" v-else></Loading>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -48,15 +48,23 @@ const getNewest = () => {
   flex-direction: column;
   //border-bottom: 1px solid rgba(128, 128, 128, 0.116);
   // padding-bottom: 2em;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 
   .newest {
     display: flex;
     flex-wrap: wrap;
+    position: relative;
 
     .newest-result {
       flex: 1 1 15em;
       margin: 0.3em;
     }
   }
+}
+
+.loading {
+  margin-top: 2em;
 }
 </style>

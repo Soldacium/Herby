@@ -2,6 +2,12 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { changeColorScheme } from "../services/color-mode.service";
+import type { PossibleTranslations } from "../models/translations.type";
+import {
+  translation,
+  changeTranslation,
+} from "../services/localization.service";
+import SelectBasic from "./SelectBasic.vue";
 const menuState = ref<"open" | "closed">("closed");
 const changeMenuState = () => {
   menuState.value === "open"
@@ -43,19 +49,33 @@ const checkPath = (path: string) => {
     mode.value = "other";
   }
 };
+
+const translationOptions: { name: string; value: PossibleTranslations }[] = [
+  {
+    name: "English",
+    value: "en",
+  },
+  {
+    name: "Polski",
+    value: "pl",
+  },
+];
 </script>
 <template>
   <nav :class="mode == 'home-search' ? 'normal' : 'reverse'">
     <img src="/src/shared/assets/icons/sport-2.svg" alt="" class="logo" />
     <div class="links">
-      <router-link to="/x/home">Home</router-link>
-      <router-link to="/x/search">Search</router-link>
-      <router-link to="/clubs">Clubs</router-link>
-      <router-link to="/x/te">Login</router-link>
-      <router-link to="/saved">Saved</router-link>
+      <router-link to="/x/home">{{ translation.nav.home }}</router-link>
+      <router-link to="/x/search">{{ translation.nav.search }}</router-link>
+      <router-link to="/saved">{{ translation.nav.saved }}</router-link>
+      <router-link to="/saved">{{ translation.nav.about }}</router-link>
       <router-link class="link-button" to="/contribute">
-        <button>Add crest +</button>
+        <button>{{ translation.nav.add }}</button>
       </router-link>
+      <SelectBasic
+        @select-change="changeTranslation($event as PossibleTranslations)"
+        :option-list="translationOptions"
+      ></SelectBasic>
       <!--
       <router-link class="link-button" to="/x/saved">
         <button>
@@ -85,9 +105,8 @@ const checkPath = (path: string) => {
       <ul>
         <li><a href="">Home</a></li>
         <li><a href="">Search</a></li>
-        <li><a href="">Clubs</a></li>
         <li><a href="">Add</a></li>
-        <li><a href="">About</a></li>
+
         <button @click="changeColorScheme('dark')">Dark Mode</button>
       </ul>
     </div>

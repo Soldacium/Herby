@@ -37,6 +37,15 @@ const routes: RouteRecordRaw[] = [
     path: "/contribute/",
     component: () => import("./views/contribute/Contribute.vue"),
   },
+  {
+    path: "/404",
+    component: () => import("./shared/components/NotFound.vue"),
+  },
+  {
+    path: "/:catchAll(.*)",
+    // component: () => import("./shared/components/NotFound.vue"),
+    redirect: "/404",
+  },
 ];
 
 const router = createRouter({

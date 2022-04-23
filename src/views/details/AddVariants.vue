@@ -116,7 +116,7 @@ const removeVariantOther = (file: File, variant: Variant) => {
 };
 </script>
 <template>
-  <div class="wrapper">
+  <div class="variants-wrapper">
     <div class="variant" v-for="(variant, i) in variants">
       <div class="file-upload-wrap">
         <FileDropper
@@ -189,7 +189,6 @@ const removeVariantOther = (file: File, variant: Variant) => {
       Next Variant
     </button>
     <div class="finalize" v-if="!uploadFinished">
-      {{ contactEmail }}
       <InputBasic
         type="email"
         placeholder="Contact email"
@@ -209,8 +208,9 @@ const removeVariantOther = (file: File, variant: Variant) => {
   </div>
 </template>
 <style lang="scss" scoped>
-.wrapper {
-  padding: 2em 6%;
+.variants-wrapper {
+  padding: 2em 13%;
+  width: 100%;
 }
 
 .variant {

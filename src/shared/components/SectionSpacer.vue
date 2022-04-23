@@ -27,7 +27,7 @@ const props = defineProps({
   border-bottom: 1px solid var(--gray-light-medium);
   position: relative;
   margin: 1em 0;
-  margin-top: 2em;
+  // margin-top: 2em;
   .section-title {
     position: absolute;
     top: 50%;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, Ref, ref } from "vue";
+import { onMounted, Ref, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import ButtonBasic from "../../shared/components/ButtonBasic.vue";
 import SectionSpacer from "../../shared/components/SectionSpacer.vue";
@@ -7,7 +7,7 @@ import AddVariants from "./AddVariants.vue";
 import Loading from "../../shared/components/Loading.vue";
 import { ApiService } from "../../shared/services/api.service";
 import { AsyncComponentState } from "../../shared/models/async-state.model";
-import NotFound from "../not-found/NotFound.vue";
+import NotFound from "../../shared/components/NotFound.vue";
 
 let placeholder = ref("placeholder");
 let fullscreen = ref(false);
@@ -47,7 +47,9 @@ onMounted(() => {
 });
 
 const getDetails = () => {
-  const detailsName = useRoute().params.name;
+  if (Object.keys(route.params).length === 0) return;
+  //console.log(route.params);
+  const detailsName = route.params.name;
   const crestId = route.params.id as string;
   state.value = "loading";
   ApiService.getSingleCrest(crestId).then((res) => {
@@ -59,6 +61,11 @@ const getDetails = () => {
     placeholder.value = detailsName as string;
   }
 };
+
+watch(route, (newRoute, oldRoute) => {
+  console.log(newRoute);
+  getDetails();
+});
 
 const downloadOptions = ref({
   imageType: "png",
@@ -277,6 +284,14 @@ const licence = "Basic licence";
 .wrapper {
   padding: 6em 13%;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  > * {
+    width: 100%;
+  }
 
   .section-title {
     margin-top: 1em;
