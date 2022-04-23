@@ -1,31 +1,38 @@
 <script lang="ts" setup>
+import { ref, Ref } from "vue";
+import { translation } from "../../../shared/services/localization.service";
+
 interface Feature {
   image: string;
   name: string;
   description: string;
 }
-const features: Feature[] = [
+const features: Ref<Feature[]> = ref([
   {
     image: "/src/shared/assets/icons/add.svg",
-    name: "Contribute",
-    description: "Add your club's logo or crest for all to see and use",
+    name: translation.value.homeSearch.home.features.feature1.title,
+    description:
+      translation.value.homeSearch.home.features.feature1.description,
   },
   {
     image: "/src/shared/assets/icons/team.svg",
-    name: "Search",
-    description: "Placeholder description",
+    name: translation.value.homeSearch.home.features.feature2.title,
+    description:
+      translation.value.homeSearch.home.features.feature2.description,
   },
   {
     image: "/src/shared/assets/icons/sports-trophy.svg",
-    name: "Expolore",
-    description: "View team's main crest and all it's veriations",
+    name: translation.value.homeSearch.home.features.feature3.title,
+    description:
+      translation.value.homeSearch.home.features.feature3.description,
   },
   {
     image: "/src/shared/assets/icons/star.svg",
-    name: "Save",
-    description: "Placeholder description",
+    name: translation.value.homeSearch.home.features.feature4.title,
+    description:
+      translation.value.homeSearch.home.features.feature4.description,
   },
-];
+]);
 </script>
 <template>
   <div class="wrapper">

@@ -1,14 +1,28 @@
 <script lang="ts" setup>
 import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
+import { translation } from "../../../shared/services/localization.service";
+import TextareaBasic from "../../../shared/components/TextareaBasic.vue";
+import InputBasic from "../../../shared/components/InputBasic.vue";
 </script>
 <template>
   <div class="wrapper">
     <div class="text">
-      <div class="title">This site is community-driven</div>
+      <div class="title">
+        {{ translation.homeSearch.home.suggestion.title }}
+      </div>
       <div class="description">
-        Bugs, issues, UX suggestions? Feel free to submit them here!
+        {{ translation.homeSearch.home.suggestion.desciprion }}
       </div>
       <form action="" method="post">
+        <InputBasic
+          :placeholder="translation.homeSearch.home.suggestion.inputPlaceholder"
+        ></InputBasic>
+        <TextareaBasic
+          :placeholder="
+            translation.homeSearch.home.suggestion.textareaPlaceholder
+          "
+        ></TextareaBasic>
+        <!--
         <input type="text" placeholder="Your mail" />
         <textarea
           name=""
@@ -16,8 +30,12 @@ import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
           cols="30"
           rows="10"
           placeholder="Message"
-        ></textarea>
-        <ButtonBasic>Send</ButtonBasic>
+        ></textarea>          
+        -->
+
+        <ButtonBasic>{{
+          translation.homeSearch.home.suggestion.buttonText
+        }}</ButtonBasic>
       </form>
     </div>
   </div>

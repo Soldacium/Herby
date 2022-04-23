@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
+import { translation } from "../../../shared/services/localization.service";
 </script>
 <template>
   <div class="wrapper">
@@ -16,17 +17,13 @@ import ButtonBasic from "../../../shared/components/ButtonBasic.vue";
       />
     </div>
     <div class="text">
-      <div class="title">A database for all</div>
+      <div class="title">{{ translation.homeSearch.home.about.title }}</div>
       <div class="description">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio
-        repellendus voluptates hic sapiente unde at harum ex rem neque impedit
-        labore facere quasi ad, laborum iusto aspernatur ipsam, iste praesentium
-        itaque non laudantium eaque. Magnam aut quisquam fugiat sit, dicta rem
-        soluta accusantium voluptatibus molestiae exercitationem tempore
-        voluptas, alias ratione error quo animi, repudiandae quis autem! Nostrum
-        fugiat quam minus.
+        {{ translation.homeSearch.home.about.description }}
       </div>
-      <ButtonBasic>Submit your own</ButtonBasic>
+      <ButtonBasic>{{
+        translation.homeSearch.home.about.buttonText
+      }}</ButtonBasic>
     </div>
   </div>
 </template>

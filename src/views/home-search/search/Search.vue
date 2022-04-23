@@ -2,6 +2,7 @@
 import { onMounted, Ref, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "../../../router";
+import { translation } from "../../../shared/services/localization.service";
 
 const route = useRoute();
 const mode = ref("home");
@@ -27,7 +28,7 @@ watch(route, (newRoute, oldRoute) => {
       Sicon
     </div>
     <div class="text" :class="mode == 'home' ? 'visible' : 'hidden'">
-      <div class="big"><b>Official</b> database for team logos and crests</div>
+      <div class="big">{{ translation.homeSearch.search.description }}</div>
       <!--
         <div class="small">
           Download in svg/png/jpg formats for your convinience and use for free

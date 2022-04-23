@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import exampleResults from "./example-result";
 import SearchResult from "../../../shared/components/SearchResult.vue";
 import SectionSpacer from "../../../shared/components/SectionSpacer.vue";
 import { onMounted, Ref, ref } from "vue";
@@ -7,6 +6,7 @@ import { ApiService } from "../../../shared/services/api.service";
 import ApiCrestData from "../../../shared/models/api-crest-data.model";
 import { AsyncComponentState } from "../../../shared/models/async-state.model";
 import Loading from "../../../shared/components/Loading.vue";
+import { translation } from "../../../shared/services/localization.service";
 
 const results: Ref<ApiCrestData[]> = ref([]);
 const state: Ref<AsyncComponentState> = ref("loading");
@@ -24,7 +24,9 @@ const getNewest = () => {
 </script>
 <template>
   <div class="wrapper">
-    <SectionSpacer>New crests</SectionSpacer>
+    <SectionSpacer>{{
+      translation.homeSearch.home.newest.title
+    }}</SectionSpacer>
     <div class="newest" v-if="state == 'success'">
       <div class="newest-result" v-for="result in results">
         <SearchResult :result="result"></SearchResult>

@@ -12,6 +12,7 @@ import SuccessCheck from "../../shared/components/SuccessCheck.vue";
 import InputBasic from "../../shared/components/InputBasic.vue";
 import TextareaBasic from "../../shared/components/TextareaBasic.vue";
 import { ApiService } from "../../shared/services/api.service";
+import { translation } from "../../shared/services/localization.service";
 
 const tags: Ref<string[]> = ref([]);
 const crestData: Ref<CrestUploadData> = ref({
@@ -153,29 +154,37 @@ const uploadCrest = () => {
     </div>
     <form class="crest-form">
       <section :disabled="uploadStarted">
-        <div class="section-name">Basic</div>
+        <div class="section-name">
+          {{ translation.contribute.basics.title }}
+        </div>
         <InputBasic
           @input-change="crestData.name = $event"
-          placeholder="Icon name"
+          :placeholder="translation.contribute.basics.namePlaceholder"
         ></InputBasic>
         <InputBasic
           @input-change="crestData.place = $event"
-          placeholder="Place"
+          :placeholder="translation.contribute.basics.placePlaceholder"
         ></InputBasic>
         <InputBasic
           @input-change="crestData.country_id = $event"
-          placeholder="Country"
+          :placeholder="translation.contribute.basics.countryPlaceholder"
           type="number"
         ></InputBasic>
       </section>
       <section :disabled="uploadStarted">
-        <div class="section-name">Optional</div>
-        <TextareaBasic placeholder="Description"></TextareaBasic>
+        <div class="section-name">
+          {{ translation.contribute.optional.title }}
+        </div>
+        <TextareaBasic
+          :placeholder="translation.contribute.optional.descriptionPlaceholder"
+        ></TextareaBasic>
       </section>
       <section :disabled="uploadStarted">
-        <div class="section-name">Submitter info</div>
+        <div class="section-name">
+          {{ translation.contribute.submitInfo.title }}
+        </div>
         <InputBasic
-          placeholder="E-mail"
+          :placeholder="translation.contribute.submitInfo.emailPlaceholder"
           type="email"
           @input-change="crestData.email = $event"
         ></InputBasic>
@@ -186,7 +195,7 @@ const uploadCrest = () => {
         type="button"
         @click="uploadCrest()"
         class="submit-button"
-        >Submit form</ButtonBasic
+        >{{ translation.contribute.buttonText }}</ButtonBasic
       >
       <div class="finalize success" v-else>
         <div class="success-text">All done!</div>
