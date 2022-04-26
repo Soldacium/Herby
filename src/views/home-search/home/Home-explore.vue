@@ -70,7 +70,7 @@ $min-height: 50vh;
       font-weight: 600;
       margin-bottom: 0.4em;
       padding-bottom: 0.2em;
-      border-bottom: 1px solid rgb(231, 231, 231);
+      border-bottom: 1px solid var(--gray-light-medium);
     }
 
     .description {

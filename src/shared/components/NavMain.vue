@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { changeColorScheme } from "../services/color-mode.service";
+import { ColorModeService } from "../services/color-mode.service";
 import type { PossibleTranslations } from "../models/translations.type";
 import {
   translation,
@@ -107,7 +107,9 @@ const translationOptions: { name: string; value: PossibleTranslations }[] = [
         <li><a href="">Search</a></li>
         <li><a href="">Add</a></li>
 
-        <button @click="changeColorScheme('dark')">Dark Mode</button>
+        <button @click="ColorModeService.changeColorScheme('dark')">
+          Dark Mode
+        </button>
       </ul>
     </div>
   </div>

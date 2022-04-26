@@ -86,7 +86,7 @@ watch(savedCrests.value, (newVal, oldVal) => {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--color-white);
   border-radius: 5px;
   // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.048);
 
@@ -144,7 +144,7 @@ watch(savedCrests.value, (newVal, oldVal) => {
       left: 0;
       width: 100%;
       // background: var(--color-gradient-1);
-      background: white;
+      background: var(--color-white);
       transition: 0.1s ease;
       border-radius: 5px;
       padding: 1em;
@@ -155,7 +155,7 @@ watch(savedCrests.value, (newVal, oldVal) => {
       opacity: 0;
 
       .name {
-        color: black;
+        color: var(--color-text);
         font-size: 2em;
       }
       .formats {
@@ -176,7 +176,7 @@ watch(savedCrests.value, (newVal, oldVal) => {
           justify-content: center;
           align-items: center;
           font-weight: 500;
-          border: 1px solid var(--gray-medium);
+          border: 1px solid var(--gray-medium-light);
           //border-bottom: 0;
           padding: 4px;
           //border-left: 0;
@@ -233,7 +233,7 @@ watch(savedCrests.value, (newVal, oldVal) => {
           display: flex;
 
           &:nth-of-type(2) {
-            border-left: 1px solid rgb(65, 65, 65);
+            border-left: 1px solid var(--gray-light-medium);
           }
 
           img {

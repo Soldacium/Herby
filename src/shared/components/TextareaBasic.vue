@@ -24,7 +24,7 @@ const emits = defineEmits<{
 
   &:hover,
   &:not([value=""]) {
-    background-color: white;
+    background-color: var(--color-white);
   }
 
   &[value=""] {

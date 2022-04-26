@@ -253,7 +253,7 @@ const uploadCrest = () => {
     flex-direction: column;
     position: relative;
     padding: 2em 1em;
-    background-color: white;
+    background-color: var(--color-white);
     margin-bottom: 2em;
     border-radius: 10px;
     border: 1px solid var(--gray-light-medium);

@@ -102,7 +102,7 @@ const unpickFile = (unpickedFile: File): void => {
     <button
       class="remove"
       v-if="removableInput && file"
-      @click="unpickFile(file)"
+      @click="unpickFile(file as File)"
     >
       <img src="/src/shared/assets/icons/cancel.svg" alt="" />
     </button>
@@ -128,7 +128,7 @@ $color-2: var(--gray-medium);
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--color-white);
     transition: 0.1s ease;
     position: relative;
 

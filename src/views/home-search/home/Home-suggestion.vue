@@ -68,7 +68,7 @@ form {
 
   input {
     padding: 0.5em 1em;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid var(--gray-light-medium);
     border-radius: 10px;
     font-size: $font-size;
   }
@@ -78,7 +78,7 @@ form {
     margin-top: 1em;
     padding: 0.5em 1em;
     font-size: $font-size;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid var(--gray-light-medium);
     border-radius: 10px;
     min-width: 35vw;
   }

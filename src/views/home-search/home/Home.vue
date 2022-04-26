@@ -39,4 +39,4 @@ const wait = (ms: number): Promise<any> => {
   <HomeExplore></HomeExplore>
   <HomeSuggestion></HomeSuggestion>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss"></style>

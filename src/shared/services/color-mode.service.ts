@@ -1,3 +1,19 @@
+import type { PossibleColorSchemes } from "../models/color-schemes.type";
+
+class ColorModeService {
+  private static currentScheme: PossibleColorSchemes = "light";
+  constructor() {}
+
+  public static changeColorScheme = (colorSchemeName: PossibleColorSchemes) => {
+    const el = document.getElementById("color-wrap-id") as HTMLDivElement;
+    el.classList.remove(ColorModeService.currentScheme);
+    el.classList.add(colorSchemeName);
+  };
+}
+
+export { ColorModeService };
+
+/*
 interface ColorScheme {
   colorBackground: string;
   colorText: string;
@@ -76,3 +92,4 @@ const setScssColors = (colorScheme: ColorScheme) => {
     colorWrap.style.setProperty(scssName, (colorScheme as any)[key]);
   }
 };
+*/

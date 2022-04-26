@@ -197,7 +197,7 @@ $color: var(--color-secondary);
     }
 
     &:focus {
-      outline: 1px solid gray;
+      outline: 1px solid var(--color-gray);
       box-shadow: var(--box-shadow-medium);
     }
   }
@@ -206,7 +206,7 @@ $color: var(--color-secondary);
     width: 50px;
     flex-shrink: 0;
     border: 1px solid var(--gray-medium);
-    background-color: white;
+    background-color: var(--color-white);
     border-left: 0;
     border-radius: 0 10px 10px 0;
     img {

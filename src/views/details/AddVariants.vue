@@ -220,7 +220,7 @@ const removeVariantOther = (file: File, variant: Variant) => {
   padding: 2em 2em;
   border-radius: 10px;
   border: var(--gray-medium) 1px solid;
-  background-color: white;
+  background-color: var(--color-white);
   flex-wrap: wrap-reverse;
   box-shadow: 0 0 6px transparent;
   transition: 0.1s;
@@ -294,7 +294,7 @@ const removeVariantOther = (file: File, variant: Variant) => {
   transition: 0.1s ease;
 
   &:hover {
-    background-color: white;
+    background-color: var(--color-white);
     color: var(--color-secondary);
     border-color: var(--color-secondary);
     border-style: solid;

@@ -112,7 +112,7 @@ import InputBasic from "../../shared/components/InputBasic.vue";
   pointer-events: none;
 }
 * {
-  color: rgb(231, 231, 231);
+  color: var(--gray-light);
 }
 
 section {
@@ -213,7 +213,7 @@ section {
 }
 
 .feedback-button {
-  $button-color: white;
+  $button-color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;

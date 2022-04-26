@@ -79,7 +79,7 @@ const features: Ref<Feature[]> = ref([
     flex-direction: column;
     justify-content: flex-start;
 
-    background-color: white;
+    background-color: var(--color-white);
     // box-shadow: 0 3px 6px rgba(0, 0, 0, 0.377);
 
     img {

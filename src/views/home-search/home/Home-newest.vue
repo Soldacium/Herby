@@ -43,7 +43,7 @@ const getNewest = () => {
   border-bottom: 1px solid rgba(128, 128, 128, 0.116);
   padding-bottom: 0.5em;
   text-align: center;
-  color: rgb(182, 182, 182);
+  color: var(--color-gray);
 }
 .wrapper {
   display: flex;

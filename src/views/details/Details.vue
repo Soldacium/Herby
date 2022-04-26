@@ -161,7 +161,7 @@ const licence = "Basic licence";
                     : 'available ' + aType
                 "
               >
-                <img :src="details.image_link" alt="" />
+                <img :src="details?.image_link" alt="" />
               </button>
             </div>
             <SectionSpacer></SectionSpacer>
@@ -436,7 +436,7 @@ const licence = "Basic licence";
 
           .info-details {
             max-height: 140px;
-            border: 1px solid rgb(226, 226, 226);
+            border: 1px solid var(--gray-light-medium);
             padding: 0em 2em;
             background-color: var(--color-background);
             border-radius: 5px;
@@ -447,7 +447,7 @@ const licence = "Basic licence";
           transform: translate(-50%, -50%);
           left: 50%;
           // padding: 0.2em 1em;
-          background-color: white;
+          background-color: var(--color-white);
           // border: 1px solid var(--color-secondary);
           border: 1px solid transparent;
           display: flex;
@@ -467,7 +467,7 @@ const licence = "Basic licence";
           margin-top: 2em;
           margin-left: 0.5em;
 
-          border: 1px solid rgb(228, 228, 228);
+          border: 1px solid var(--gray-light-medium);
           border-top: 1px solid transparent;
           overflow: hidden;
           max-height: 0;
@@ -498,7 +498,7 @@ const licence = "Basic licence";
         .tag {
           padding: 0.4em 0.8em;
           margin: 0.5em;
-          border: 1px solid rgb(230, 230, 230);
+          border: 1px solid var(--gray-light-medium);
           border-radius: 10px;
           background: var(--color-background);
           // box-shadow: 0 0 6px rgba(0, 0, 0, 0.055);
@@ -506,7 +506,7 @@ const licence = "Basic licence";
 
           &:hover {
             background: var(--color-secondary);
-            color: white;
+            color: var(--color-text);
             cursor: pointer;
           }
         }
@@ -543,7 +543,7 @@ const licence = "Basic licence";
             span {
               opacity: 1;
             }
-            background-color: white;
+            background-color: var(--color-white);
             pointer-events: none;
             // border: 1px solid black;
           }
